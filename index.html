@@ -14,10 +14,10 @@
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- Google Fonts -->
+  <!-- Google Fonts (Indo-Pak Quranic Naskh + Royal Typography) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Scheherazade+New:wght@400;700&family=Cinzel:wght@600;700;800&family=Noto+Nastaliq+Urdu:wght@400;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Scheherazade+New:wght@400;700&family=Amiri+Quran&family=Cinzel:wght@600;700;800&family=Noto+Nastaliq+Urdu:wght@400;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <script>
     tailwind.config = {
@@ -57,14 +57,64 @@
       body { padding-bottom: 0px; }
     }
     .luxury-shadow { box-shadow: 0 10px 28px -8px rgba(4, 36, 25, 0.08); }
-    .gold-border { border: 1px solid rgba(197, 160, 89, 0.4); }
+    .gold-border { border: 1px solid rgba(197, 160, 89, 0.45); }
     .nav-pill.active { background-color: #042419; color: #E5C76B; border-color: #C5A059; }
     .mob-nav.active { color: #042419; }
     .mob-nav.active .mob-icon { background-color: #042419; color: #E5C76B; border-color: #C5A059; }
     .no-scrollbar::-webkit-scrollbar { display: none; }
     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-    .mushaf-text { font-family: 'Scheherazade New', serif; font-weight: 700; line-height: 2.35; word-spacing: 3px; }
-    .ayah-badge { display: inline-flex; align-items: center; justify-content: center; font-family: 'Scheherazade New', serif; font-weight: 700; font-size: 0.72em; color: #855E20; background-color: #FBF4DC; border: 1.5px solid #C5A059; border-radius: 9999px; min-width: 1.7em; height: 1.7em; padding: 0 0.35em; margin: 0 0.28em; vertical-align: middle; }
+
+    /* Indo-Pak Printed Mushaf Ruled Paper & Bold Calligraphy */
+    .mushaf-text {
+      font-family: 'Scheherazade New', serif;
+      font-weight: 700;
+      line-height: 2.45;
+      word-spacing: 4px;
+      background-image: repeating-linear-gradient(
+        to bottom,
+        transparent 0px,
+        transparent calc(2.45em - 1px),
+        rgba(197, 160, 89, 0.28) calc(2.45em - 1px),
+        rgba(197, 160, 89, 0.28) 2.45em
+      );
+    }
+
+    /* Ornate Floral Ayah End Medallion (Matches Printed Mushaf) */
+    .ayah-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Scheherazade New', serif;
+      font-weight: 700;
+      font-size: 0.72em;
+      color: #042419;
+      background: radial-gradient(circle, #FFFDF7 45%, #F3E5AB 100%);
+      border: 2px solid #A67C37;
+      box-shadow: 0 0 0 2px #FAF8F3, 0 0 0 3px #C5A059;
+      border-radius: 9999px;
+      min-width: 1.65em;
+      height: 1.65em;
+      padding: 0 0.32em;
+      margin: 0 0.35em;
+      vertical-align: middle;
+    }
+
+    /* Royal Ornamental Surah & Bismillah Arch Frame */
+    .surah-arch-banner {
+      position: relative;
+      background: linear-gradient(180deg, #063324 0%, #042419 100%);
+      border: 2px solid #C5A059;
+      border-radius: 28px 28px 14px 14px;
+      box-shadow: inset 0 0 0 3px #042419, inset 0 0 0 4.5px rgba(229, 199, 107, 0.55), 0 6px 18px rgba(4, 36, 25, 0.14);
+    }
+    .bismillah-dome {
+      display: inline-block;
+      background: linear-gradient(180deg, #FFFDF8 0%, #F7EFE0 100%);
+      border: 2px solid #A67C37;
+      box-shadow: inset 0 0 0 2px #FFFDF8, inset 0 0 0 3px #C5A059;
+      border-radius: 999px 999px 18px 18px;
+      padding: 6px 28px 4px 28px;
+    }
 
     /* Splash Screen Animations */
     @keyframes spinSlow { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
@@ -98,7 +148,7 @@
   <!-- ROYAL CINEMATIC SPLASH SCREEN -->
   <div id="royalSplashScreen" class="fixed inset-0 z-[9999] bg-gradient-to-b from-[#063324] via-[#042419] to-[#02140E] flex flex-col items-center justify-center px-4 text-center select-none overflow-hidden">
     <p class="font-arabic text-2xl sm:text-3xl text-[#E5C76B]/90 mb-7 tracking-wide">
-      بِسْمِ ٱللَّٰهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ
+      بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْمِ
     </p>
 
     <div class="relative w-32 h-32 sm:w-40 sm:h-40 flex items-center justify-center animate-emblem">
@@ -267,7 +317,7 @@
       </div>
     </section>
 
-    <!-- 2. NOBLE QURAN (30 PARA + SURAH + QARIS + ROMAN URDU) -->
+    <!-- 2. NOBLE QURAN (INDO-PAK PRINTED MUSHAF STYLE) -->
     <section id="sec-quran" class="view-section hidden space-y-4">
       <div class="bg-white rounded-3xl p-4 sm:p-5 gold-border luxury-shadow space-y-3.5">
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
@@ -330,22 +380,25 @@
         </div>
       </div>
 
-      <!-- Mushaf Book Frame -->
-      <div id="mushafBookFrame" class="bg-white rounded-3xl border-2 border-gold-400 luxury-shadow overflow-hidden">
-        <div class="bg-emeraldRoyal text-white px-4 sm:px-6 py-3 flex items-center justify-between border-b border-gold-400/40">
+      <!-- Printed Indo-Pak Mushaf Book Frame -->
+      <div id="mushafBookFrame" class="bg-[#FFFDF8] rounded-3xl border-2 border-gold-500 luxury-shadow overflow-hidden">
+        <div class="bg-emeraldRoyal text-white px-4 sm:px-6 py-3 flex items-center justify-between border-b-2 border-gold-400">
           <div class="text-xs font-bold text-gold-300" id="pageParaBadge">Para 1</div>
           <div class="text-xs sm:text-sm font-royal font-bold tracking-wider text-white" id="pageIndicatorHeader">Page 1 of 20</div>
           <div class="text-xs font-semibold text-gold-200" id="pageSurahBadge">Al-Fatihah</div>
         </div>
 
-        <div id="mushafPageContent" class="p-4 sm:p-8 min-h-[420px] bg-gradient-to-b from-pearl/60 via-white to-pearl/60">
-          <div class="text-center py-16 text-slate-500">
-            <p class="font-arabic text-4xl text-gold-500 mb-2">بِسْمِ ٱللَّٰهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</p>
-            <p class="text-xs">Opening Noble Quran...</p>
+        <!-- Ornamental Inner Border -->
+        <div class="p-2.5 sm:p-5 bg-gradient-to-b from-[#FAF5E8] via-[#FFFDF8] to-[#FAF5E8]">
+          <div id="mushafPageContent" class="p-3.5 sm:p-6 min-h-[420px] rounded-2xl border-2 border-gold-400/70 bg-[#FFFDF9] shadow-inner">
+            <div class="text-center py-16 text-slate-500">
+              <p class="font-arabic text-4xl text-gold-500 mb-2">بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْمِ</p>
+              <p class="text-xs">Opening Noble Quran...</p>
+            </div>
           </div>
         </div>
 
-        <div class="bg-cream/90 px-4 py-3.5 border-t border-gold-400/30 flex items-center justify-between gap-2">
+        <div class="bg-cream/90 px-4 py-3.5 border-t border-gold-400/40 flex items-center justify-between gap-2">
           <button onclick="prevQuranPage()" id="prevPageBtn" class="px-4 py-2 rounded-xl bg-emeraldRoyal text-gold-300 text-xs font-bold disabled:opacity-40">← Previous</button>
           <div class="flex items-center gap-1.5 text-xs">
             <span class="text-slate-600 font-semibold hidden sm:inline">Go to Page:</span>
@@ -573,6 +626,57 @@
       document.getElementById('dailyZikrMean').innerText = zikrs[zIdx].mean;
     }
 
+    // Indo-Pak Clean Script Normalizer (Removes Uthmani small 'o' / Alif Wasla ٱ & stray pause marks)
+    function formatIndoPakArabic(text) {
+      return text
+        // Replace Uthmani Alif Wasla (ٱ) at start of Al- (ٱل) with standard Indo-Pak Alif + Zabar (اَل)
+        .replace(/ٱل/g, 'اَل')
+        // Replace any remaining Alif Wasla (ٱ) with clean Alif (ا)
+        .replace(/ٱ/g, 'ا')
+        // Remove Uthmani small high rounded zero / empty center circles (U+06DF, U+06E0) that look like small 'o'
+        .replace(/[\u06DF\u06E0]/g, '')
+        // Normalize Uthmani dagger alif / small letters so they look crisp in Indo-Pak Naskh
+        .replace(/رَّحْمَٰنِ/g, 'رَّحْمٰنِ')
+        .replace(/عَٰلَمِينَ/g, 'عٰلَمِيْنَ')
+        .replace(/مَٰلِكِ/g, 'مٰلِكِ')
+        .trim();
+    }
+
+    function stripInlineBismillah(text, surahNum, ayahNum) {
+      if (ayahNum !== 1 || surahNum === 1 || surahNum === 9) return text;
+      return text
+        .replace(/^بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ\s*/, '')
+        .replace(/^بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ\s*/, '')
+        .replace(/^بِسْمِ اَللَّهِ اَلرَّحْمٰنِ اَلرَّحِيمِ\s*/, '')
+        .trim();
+    }
+
+    // Build Royal Ornamental Arch Surah & Bismillah Banner (Matches Printed Mushaf Header)
+    function renderSurahOrnamentalBanner(surah) {
+      const showBismillah = (surah.number !== 1 && surah.number !== 9);
+      return `
+        <div class="my-5 surah-arch-banner px-4 py-4 text-center select-none">
+          <div class="flex items-center justify-between text-[10px] sm:text-xs text-gold-300/90 font-semibold px-2 pb-2 border-b border-gold-400/30">
+            <span>Surah ${surah.number}</span>
+            <span class="font-royal tracking-widest uppercase text-gold-200">${surah.englishName}</span>
+            <span>${surah.revelationType === 'Meccan' ? 'مَكِّيَّة' : 'مَدَنِيَّة'} • ${surah.numberOfAyahs} Ayahs</span>
+          </div>
+          <p class="font-arabic text-2xl sm:text-3xl text-gold-300 font-bold mt-2 tracking-wide">
+            ۞ ${surah.name} ۞
+          </p>
+          ${showBismillah ? `
+            <div class="mt-3 pt-1">
+              <div class="bismillah-dome shadow-md">
+                <p class="font-arabic text-xl sm:text-3xl text-emeraldRoyal font-bold tracking-wide" dir="rtl">
+                  بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْمِ
+                </p>
+              </div>
+            </div>
+          ` : ''}
+        </div>
+      `;
+    }
+
     // Quran Reader Engine
     let currentPage = parseInt(localStorage.getItem('sa_last_quran_page') || '1');
     let quranMode = 'arabic';
@@ -622,11 +726,6 @@
 
     function toArabicDigits(num) {
       return String(num).replace(/\d/g, d => ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'][d]);
-    }
-
-    function stripInlineBismillah(text, surahNum, ayahNum) {
-      if (ayahNum !== 1 || surahNum === 1 || surahNum === 9) return text;
-      return text.replace(/^بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ\s*/, '').replace(/^بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ\s*/, '').trim();
     }
 
     function updateTilawatSource(surahNum, surahName, autoPlay = false) {
@@ -766,26 +865,30 @@
         html += `<div class="text-justify mushaf-text text-emeraldRoyal" style="font-size: ${arabicFontSize}px;" dir="rtl">`;
         data.arabic.forEach(ayah => {
           if (ayah.numberInSurah === 1) {
-            html += `<div class="my-4 py-3 px-4 rounded-2xl bg-emeraldRoyal text-center border border-gold-400 shadow-sm"><p class="font-arabic text-2xl sm:text-3xl text-gold-300 font-bold">${ayah.surah.name}</p>${ayah.surah.number !== 1 && ayah.surah.number !== 9 ? `<p class="font-arabic text-xl sm:text-2xl text-white mt-1 font-bold">بِسْمِ ٱللَّٰهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</p>` : ''}</div>`;
+            html += renderSurahOrnamentalBanner(ayah.surah);
           }
-          const cleanArabic = stripInlineBismillah(ayah.text, ayah.surah.number, ayah.numberInSurah);
-          if (cleanArabic) html += `<span>${cleanArabic}</span><span class="ayah-badge">${toArabicDigits(ayah.numberInSurah)}</span> `;
+          const stripped = stripInlineBismillah(ayah.text, ayah.surah.number, ayah.numberInSurah);
+          const cleanArabic = formatIndoPakArabic(stripped);
+          if (cleanArabic) {
+            html += `<span>${cleanArabic}</span><span class="ayah-badge">${toArabicDigits(ayah.numberInSurah)}</span> `;
+          }
         });
         html += `</div>`;
       } else {
         html += `<div class="space-y-4">`;
         data.arabic.forEach((ayah, idx) => {
           if (ayah.numberInSurah === 1) {
-            html += `<div class="py-3 px-4 rounded-2xl bg-emeraldRoyal text-center border border-gold-400 shadow-sm"><p class="font-arabic text-2xl sm:text-3xl text-gold-300 font-bold">${ayah.surah.name}</p>${ayah.surah.number !== 1 && ayah.surah.number !== 9 ? `<p class="font-arabic text-xl sm:text-2xl text-white mt-1 font-bold">بِسْمِ ٱللَّٰهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</p>` : ''}</div>`;
+            html += renderSurahOrnamentalBanner(ayah.surah);
           }
-          const cleanArabic = stripInlineBismillah(ayah.text, ayah.surah.number, ayah.numberInSurah);
+          const stripped = stripInlineBismillah(ayah.text, ayah.surah.number, ayah.numberInSurah);
+          const cleanArabic = formatIndoPakArabic(stripped);
           let transHtml = '';
           if (quranMode === 'urdu' && data.urdu[idx]) {
             transHtml = `<p class="font-urdu text-sm sm:text-base text-slate-700 text-right leading-loose pt-2.5 border-t border-gold-400/20" dir="rtl">${data.urdu[idx].text}</p>`;
           } else if (quranMode === 'roman' && data.roman[idx]) {
             transHtml = `<p class="text-xs sm:text-sm text-slate-700 leading-relaxed pt-2.5 border-t border-gold-400/20 font-medium">${toNaturalRomanUrdu(data.roman[idx].text, ayah.surah.number, ayah.numberInSurah)}</p>`;
           }
-          html += `<div class="p-4 rounded-2xl bg-white border border-gold-400/35 shadow-sm space-y-2.5"><div class="flex items-center justify-between text-[10px] text-slate-400 font-bold"><span class="px-2 py-0.5 rounded-full bg-pearl text-emeraldRoyal border border-gold-400/40">${ayah.surah.englishName} • Ayah ${ayah.numberInSurah}</span><span>Para ${paraStats.paraNumber}</span></div><p class="mushaf-text text-right text-emeraldRoyal" style="font-size: ${arabicFontSize}px;" dir="rtl">${cleanArabic} <span class="ayah-badge">${toArabicDigits(ayah.numberInSurah)}</span></p>${transHtml}</div>`;
+          html += `<div class="p-4 rounded-2xl bg-white border border-gold-400/40 shadow-sm space-y-2.5"><div class="flex items-center justify-between text-[10px] text-slate-400 font-bold"><span class="px-2 py-0.5 rounded-full bg-pearl text-emeraldRoyal border border-gold-400/40">${ayah.surah.englishName} • Ayah ${ayah.numberInSurah}</span><span>Para ${paraStats.paraNumber}</span></div><p class="mushaf-text text-right text-emeraldRoyal" style="font-size: ${arabicFontSize}px;" dir="rtl">${cleanArabic} <span class="ayah-badge">${toArabicDigits(ayah.numberInSurah)}</span></p>${transHtml}</div>`;
         });
         html += `</div>`;
       }
