@@ -5,13 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>SHEIKH AZHAR — Royal Islamic Sanctuary</title>
 
+  <!-- PWA Manifest & App Icons -->
+  <link rel="manifest" href="./manifest.json">
+  <meta name="theme-color" content="#042419">
+  <link rel="icon" type="image/svg+xml" href="./icon.svg">
+  <link rel="apple-touch-icon" href="./icon.svg">
+
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- Google Fonts: Graceful South Asian / Indo-Pak Quran Calligraphy (Scheherazade New & Lateef), Cinzel, Hind, Noto Nastaliq Urdu -->
+  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Hind:wght@400;500;600&family=Lateef:wght@400;600;700&family=Noto+Nastaliq+Urdu:wght@400;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Scheherazade+New:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Scheherazade+New:wght@400;700&family=Cinzel:wght@600;700;800&family=Noto+Nastaliq+Urdu:wght@400;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <script>
     tailwind.config = {
@@ -32,9 +38,8 @@
           },
           fontFamily: {
             royal: ['"Cinzel"', 'serif'],
-            quran: ['"Scheherazade New"', '"Lateef"', 'serif'],
+            arabic: ['"Scheherazade New"', 'serif'],
             urdu: ['"Noto Nastaliq Urdu"', 'serif'],
-            hindi: ['"Hind"', 'sans-serif'],
             sans: ['"Plus Jakarta Sans"', 'sans-serif']
           }
         }
@@ -51,44 +56,95 @@
     @media (min-width: 768px) {
       body { padding-bottom: 0px; }
     }
-    .luxury-shadow {
-      box-shadow: 0 10px 28px -8px rgba(4, 36, 25, 0.08);
-    }
-    .gold-border {
-      border: 1px solid rgba(197, 160, 89, 0.45);
-    }
-    .nav-pill.active {
-      background-color: #042419;
-      color: #E5C76B;
-      border-color: #C5A059;
-    }
-    .mob-nav.active {
-      color: #042419;
-    }
-    .mob-nav.active .mob-icon {
-      background-color: #042419;
-      color: #E5C76B;
-      border-color: #C5A059;
-    }
-    .mushaf-page {
-      background: linear-gradient(180deg, #FFFDF9 0%, #FAF6EC 100%);
-      border: 2px solid #C5A059;
-      box-shadow: inset 0 0 24px rgba(197, 160, 89, 0.14), 0 12px 30px -10px rgba(4, 36, 25, 0.12);
-    }
-    .ayah-end-badge {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-family: 'Scheherazade New', serif;
-      color: #855E20;
-      font-size: 0.9em;
-      margin: 0 6px;
-    }
+    .luxury-shadow { box-shadow: 0 10px 28px -8px rgba(4, 36, 25, 0.08); }
+    .gold-border { border: 1px solid rgba(197, 160, 89, 0.4); }
+    .nav-pill.active { background-color: #042419; color: #E5C76B; border-color: #C5A059; }
+    .mob-nav.active { color: #042419; }
+    .mob-nav.active .mob-icon { background-color: #042419; color: #E5C76B; border-color: #C5A059; }
     .no-scrollbar::-webkit-scrollbar { display: none; }
     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    .mushaf-text { font-family: 'Scheherazade New', serif; font-weight: 700; line-height: 2.35; word-spacing: 3px; }
+    .ayah-badge { display: inline-flex; align-items: center; justify-content: center; font-family: 'Scheherazade New', serif; font-weight: 700; font-size: 0.72em; color: #855E20; background-color: #FBF4DC; border: 1.5px solid #C5A059; border-radius: 9999px; min-width: 1.7em; height: 1.7em; padding: 0 0.35em; margin: 0 0.28em; vertical-align: middle; }
+
+    /* Splash Screen Animations */
+    @keyframes spinSlow { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    @keyframes spinReverse { 0% { transform: rotate(45deg); } 100% { transform: rotate(-315deg); } }
+    @keyframes emblemPop { 0% { opacity: 0; transform: scale(0.7); } 60% { opacity: 1; transform: scale(1.06); } 100% { opacity: 1; transform: scale(1); filter: drop-shadow(0 0 22px rgba(229, 199, 107, 0.55)); } }
+    @keyframes letterWave { 0% { opacity: 0; transform: translateY(22px) scale(0.85); filter: blur(6px); } 100% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); } }
+    @keyframes goldShimmer { 0% { background-position: -200% center; } 100% { background-position: 200% center; } }
+    @keyframes subtitleFade { 0% { opacity: 0; letter-spacing: 0.1em; transform: translateY(8px); } 100% { opacity: 1; letter-spacing: 0.32em; transform: translateY(0); } }
+    @keyframes loaderFill { 0% { width: 0%; } 100% { width: 100%; } }
+
+    .animate-star-1 { animation: spinSlow 18s linear infinite; transform-origin: center; }
+    .animate-star-2 { animation: spinReverse 18s linear infinite; transform-origin: center; }
+    .animate-emblem { animation: emblemPop 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+    .royal-letter {
+      display: inline-block;
+      opacity: 0;
+      background: linear-gradient(90deg, #C5A059 0%, #FFF3C4 45%, #E5C76B 60%, #C5A059 100%);
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: letterWave 0.65s cubic-bezier(0.22, 1, 0.36, 1) forwards, goldShimmer 2.8s linear infinite;
+    }
+    .animate-subtitle { opacity: 0; animation: subtitleFade 0.9s ease forwards 1.1s; }
+    .animate-bar { animation: loaderFill 2.8s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
+    #royalSplashScreen { transition: opacity 0.7s ease, visibility 0.7s ease, transform 0.7s ease; }
+    #royalSplashScreen.splash-hide { opacity: 0; visibility: hidden; transform: scale(1.04); }
   </style>
 </head>
 <body class="font-sans min-h-screen flex flex-col antialiased selection:bg-gold-300 selection:text-emeraldRoyal">
+
+  <!-- ROYAL CINEMATIC SPLASH SCREEN -->
+  <div id="royalSplashScreen" class="fixed inset-0 z-[9999] bg-gradient-to-b from-[#063324] via-[#042419] to-[#02140E] flex flex-col items-center justify-center px-4 text-center select-none overflow-hidden">
+    <p class="font-arabic text-2xl sm:text-3xl text-[#E5C76B]/90 mb-7 tracking-wide">
+      بِسْمِ ٱللَّٰهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ
+    </p>
+
+    <div class="relative w-32 h-32 sm:w-40 sm:h-40 flex items-center justify-center animate-emblem">
+      <svg viewBox="0 0 200 200" class="w-full h-full">
+        <defs>
+          <linearGradient id="splashGold" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#F3E5AB"/>
+            <stop offset="50%" stop-color="#C5A059"/>
+            <stop offset="100%" stop-color="#855E20"/>
+          </linearGradient>
+        </defs>
+        <circle cx="100" cy="100" r="92" fill="none" stroke="url(#splashGold)" stroke-width="1.2" stroke-dasharray="4 4" opacity="0.6"/>
+        <rect x="38" y="38" width="124" height="124" rx="10" fill="none" stroke="url(#splashGold)" stroke-width="2.5" class="animate-star-1"/>
+        <rect x="38" y="38" width="124" height="124" rx="10" fill="none" stroke="url(#splashGold)" stroke-width="2.5" class="animate-star-2"/>
+        <circle cx="100" cy="100" r="52" fill="#042419" stroke="url(#splashGold)" stroke-width="2.5"/>
+      </svg>
+      <span class="absolute font-royal text-3xl sm:text-4xl font-extrabold text-[#E5C76B] tracking-widest">SA</span>
+    </div>
+
+    <div class="mt-7 space-y-2.5">
+      <h1 class="font-royal text-2xl sm:text-4xl font-extrabold tracking-wider flex items-center justify-center flex-wrap">
+        <span class="royal-letter" style="animation-delay: 0.25s">S</span>
+        <span class="royal-letter" style="animation-delay: 0.32s">H</span>
+        <span class="royal-letter" style="animation-delay: 0.39s">E</span>
+        <span class="royal-letter" style="animation-delay: 0.46s">I</span>
+        <span class="royal-letter" style="animation-delay: 0.53s">K</span>
+        <span class="royal-letter" style="animation-delay: 0.60s">H</span>
+        <span class="inline-block w-3 sm:w-4"></span>
+        <span class="royal-letter" style="animation-delay: 0.72s">A</span>
+        <span class="royal-letter" style="animation-delay: 0.79s">Z</span>
+        <span class="royal-letter" style="animation-delay: 0.86s">H</span>
+        <span class="royal-letter" style="animation-delay: 0.93s">A</span>
+        <span class="royal-letter" style="animation-delay: 1.00s">R</span>
+      </h1>
+
+      <div class="flex items-center justify-center gap-3 animate-subtitle">
+        <span class="h-[1px] w-8 bg-gradient-to-r from-transparent to-[#C5A059]"></span>
+        <p class="text-[10px] sm:text-xs uppercase text-[#E5C76B] font-semibold">Royal Islamic Sanctuary</p>
+        <span class="h-[1px] w-8 bg-gradient-to-l from-transparent to-[#C5A059]"></span>
+      </div>
+    </div>
+
+    <div class="w-48 h-1 bg-white/10 rounded-full overflow-hidden mt-8 border border-[#C5A059]/30">
+      <div class="h-full bg-gradient-to-r from-[#855E20] via-[#F3E5AB] to-[#C5A059] animate-bar"></div>
+    </div>
+  </div>
 
   <!-- TOP ROYAL HEADER -->
   <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-gold-400/30">
@@ -118,65 +174,39 @@
     <!-- Desktop Navigation -->
     <nav class="hidden md:block bg-cream/60 border-t border-gold-400/20">
       <div class="max-w-5xl mx-auto px-4 py-2 flex items-center gap-2 overflow-x-auto no-scrollbar">
-        <button onclick="showSection('home')" id="pill-home" class="nav-pill active px-4 py-1.5 rounded-full text-xs font-semibold border border-transparent transition whitespace-nowrap">
-          🕌 Namaz & Home
-        </button>
-        <button onclick="showSection('quran')" id="pill-quran" class="nav-pill px-4 py-1.5 rounded-full text-xs font-semibold text-slate-600 hover:bg-white border border-transparent transition whitespace-nowrap">
-          📖 Holy Quran (604 Pages)
-        </button>
-        <button onclick="showSection('tasbeeh')" id="pill-tasbeeh" class="nav-pill px-4 py-1.5 rounded-full text-xs font-semibold text-slate-600 hover:bg-white border border-transparent transition whitespace-nowrap">
-          📿 Tasbeeh Pro
-        </button>
-        <button onclick="showSection('hadith')" id="pill-hadith" class="nav-pill px-4 py-1.5 rounded-full text-xs font-semibold text-slate-600 hover:bg-white border border-transparent transition whitespace-nowrap">
-          📜 Sahih Hadiths
-        </button>
-        <button onclick="showSection('calendar')" id="pill-calendar" class="nav-pill px-4 py-1.5 rounded-full text-xs font-semibold text-slate-600 hover:bg-white border border-transparent transition whitespace-nowrap">
-          📅 Calendar
-        </button>
-        <button onclick="showSection('sunnah')" id="pill-sunnah" class="nav-pill px-4 py-1.5 rounded-full text-xs font-semibold text-slate-600 hover:bg-white border border-transparent transition whitespace-nowrap">
-          ✨ Sunnah & Duas
-        </button>
-        <button onclick="showSection('ramadan')" id="pill-ramadan" class="nav-pill px-4 py-1.5 rounded-full text-xs font-semibold text-slate-600 hover:bg-white border border-transparent transition whitespace-nowrap">
-          🌙 Ramadan
-        </button>
-        <button onclick="showSection('zakat')" id="pill-zakat" class="nav-pill px-4 py-1.5 rounded-full text-xs font-semibold text-slate-600 hover:bg-white border border-transparent transition whitespace-nowrap">
-          ⚖️ Zakat
-        </button>
+        <button onclick="showSection('home')" id="pill-home" class="nav-pill active px-4 py-1.5 rounded-full text-xs font-semibold border border-transparent transition whitespace-nowrap">🕌 Namaz & Home</button>
+        <button onclick="showSection('quran')" id="pill-quran" class="nav-pill px-4 py-1.5 rounded-full text-xs font-semibold text-slate-600 hover:bg-white border border-transparent transition whitespace-nowrap">📖 Noble Quran (30 Para)</button>
+        <button onclick="showSection('tasbeeh')" id="pill-tasbeeh" class="nav-pill px-4 py-1.5 rounded-full text-xs font-semibold text-slate-600 hover:bg-white border border-transparent transition whitespace-nowrap">📿 Tasbeeh Pro</button>
+        <button onclick="showSection('calendar')" id="pill-calendar" class="nav-pill px-4 py-1.5 rounded-full text-xs font-semibold text-slate-600 hover:bg-white border border-transparent transition whitespace-nowrap">📅 Calendar</button>
+        <button onclick="showSection('sunnah')" id="pill-sunnah" class="nav-pill px-4 py-1.5 rounded-full text-xs font-semibold text-slate-600 hover:bg-white border border-transparent transition whitespace-nowrap">✨ Sunnah, Duas & Hadith</button>
+        <button onclick="showSection('zakat')" id="pill-zakat" class="nav-pill px-4 py-1.5 rounded-full text-xs font-semibold text-slate-600 hover:bg-white border border-transparent transition whitespace-nowrap">⚖️ Zakat</button>
       </div>
     </nav>
   </header>
 
   <!-- MOBILE BOTTOM NAVIGATION DOCK -->
-  <nav class="md:hidden fixed bottom-0 inset-x-0 z-50 bg-white/95 backdrop-blur-md border-t border-gold-400/40 px-1 py-1.5 flex items-center justify-around shadow-2xl overflow-x-auto no-scrollbar">
-    <button onclick="showSection('home')" id="mob-home" class="mob-nav active flex flex-col items-center justify-center min-w-[52px] text-[10px] font-bold text-slate-500">
+  <nav class="md:hidden fixed bottom-0 inset-x-0 z-50 bg-white/95 backdrop-blur-md border-t border-gold-400/40 px-1 py-1.5 flex items-center justify-around shadow-2xl">
+    <button onclick="showSection('home')" id="mob-home" class="mob-nav active flex flex-col items-center justify-center w-full text-[10px] font-bold text-slate-500">
       <span class="mob-icon w-7 h-7 rounded-full border border-transparent flex items-center justify-center text-sm mb-0.5 transition">🕌</span>
       <span>Namaz</span>
     </button>
-    <button onclick="showSection('quran')" id="mob-quran" class="mob-nav flex flex-col items-center justify-center min-w-[52px] text-[10px] font-bold text-slate-500">
+    <button onclick="showSection('quran')" id="mob-quran" class="mob-nav flex flex-col items-center justify-center w-full text-[10px] font-bold text-slate-500">
       <span class="mob-icon w-7 h-7 rounded-full border border-transparent flex items-center justify-center text-sm mb-0.5 transition">📖</span>
       <span>Quran</span>
     </button>
-    <button onclick="showSection('tasbeeh')" id="mob-tasbeeh" class="mob-nav flex flex-col items-center justify-center min-w-[52px] text-[10px] font-bold text-slate-500">
+    <button onclick="showSection('tasbeeh')" id="mob-tasbeeh" class="mob-nav flex flex-col items-center justify-center w-full text-[10px] font-bold text-slate-500">
       <span class="mob-icon w-7 h-7 rounded-full border border-transparent flex items-center justify-center text-sm mb-0.5 transition">📿</span>
       <span>Tasbeeh</span>
     </button>
-    <button onclick="showSection('hadith')" id="mob-hadith" class="mob-nav flex flex-col items-center justify-center min-w-[52px] text-[10px] font-bold text-slate-500">
-      <span class="mob-icon w-7 h-7 rounded-full border border-transparent flex items-center justify-center text-sm mb-0.5 transition">📜</span>
-      <span>Hadith</span>
-    </button>
-    <button onclick="showSection('calendar')" id="mob-calendar" class="mob-nav flex flex-col items-center justify-center min-w-[52px] text-[10px] font-bold text-slate-500">
+    <button onclick="showSection('calendar')" id="mob-calendar" class="mob-nav flex flex-col items-center justify-center w-full text-[10px] font-bold text-slate-500">
       <span class="mob-icon w-7 h-7 rounded-full border border-transparent flex items-center justify-center text-sm mb-0.5 transition">📅</span>
       <span>Calendar</span>
     </button>
-    <button onclick="showSection('sunnah')" id="mob-sunnah" class="mob-nav flex flex-col items-center justify-center min-w-[52px] text-[10px] font-bold text-slate-500">
+    <button onclick="showSection('sunnah')" id="mob-sunnah" class="mob-nav flex flex-col items-center justify-center w-full text-[10px] font-bold text-slate-500">
       <span class="mob-icon w-7 h-7 rounded-full border border-transparent flex items-center justify-center text-sm mb-0.5 transition">✨</span>
       <span>Sunnah</span>
     </button>
-    <button onclick="showSection('ramadan')" id="mob-ramadan" class="mob-nav flex flex-col items-center justify-center min-w-[52px] text-[10px] font-bold text-slate-500">
-      <span class="mob-icon w-7 h-7 rounded-full border border-transparent flex items-center justify-center text-sm mb-0.5 transition">🌙</span>
-      <span>Ramadan</span>
-    </button>
-    <button onclick="showSection('zakat')" id="mob-zakat" class="mob-nav flex flex-col items-center justify-center min-w-[52px] text-[10px] font-bold text-slate-500">
+    <button onclick="showSection('zakat')" id="mob-zakat" class="mob-nav flex flex-col items-center justify-center w-full text-[10px] font-bold text-slate-500">
       <span class="mob-icon w-7 h-7 rounded-full border border-transparent flex items-center justify-center text-sm mb-0.5 transition">⚖️</span>
       <span>Zakat</span>
     </button>
@@ -185,29 +215,11 @@
   <!-- MAIN WORKSPACE -->
   <main class="max-w-5xl mx-auto px-3 sm:px-4 py-4 sm:py-6 flex-1 w-full">
 
-    <!-- ==================== 1. HOME & NAMAZ ==================== -->
+    <!-- 1. HOME & NAMAZ -->
     <section id="sec-home" class="view-section space-y-4 sm:space-y-6">
-      
-      <!-- Resume Reading Quick Banner -->
-      <div id="resumeReadingBanner" class="hidden rounded-2xl bg-cream p-3.5 sm:p-4 gold-border flex items-center justify-between gap-3">
-        <div class="flex items-center gap-2.5">
-          <span class="text-xl">🔖</span>
-          <div>
-            <p class="text-[10px] font-bold uppercase tracking-wider text-gold-600">Continue Quran Reading</p>
-            <p class="text-xs font-bold text-emeraldRoyal" id="resumeLabelText">Page 1 • Para 1</p>
-          </div>
-        </div>
-        <button onclick="resumeLastRead()" class="px-3.5 py-1.5 rounded-xl bg-emeraldRoyal text-gold-300 text-xs font-bold hover:bg-emeraldCard transition shrink-0">
-          Open Page →
-        </button>
-      </div>
-
-      <!-- Hero Prayer Banner -->
       <div class="rounded-3xl bg-gradient-to-br from-emeraldRoyal via-emeraldCard to-emeraldRoyal text-white p-5 sm:p-8 gold-border luxury-shadow flex flex-col md:flex-row md:items-center justify-between gap-4 sm:gap-6">
         <div class="space-y-1.5 text-center md:text-left">
-          <span class="inline-block px-3 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-widest bg-gold-400/20 text-gold-300 border border-gold-400/30">
-            Next Salat Countdown
-          </span>
+          <span class="inline-block px-3 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-widest bg-gold-400/20 text-gold-300 border border-gold-400/30">Next Salat Countdown</span>
           <h2 class="font-royal text-2xl sm:text-4xl font-bold text-gold-300" id="nextPrayerName">Calculating...</h2>
           <p class="text-xs text-slate-300" id="cityDisplay">Ajmer, Rajasthan • Hanafi Standard</p>
         </div>
@@ -218,7 +230,6 @@
         </div>
       </div>
 
-      <!-- 5 Daily Prayers Grid -->
       <div class="bg-white rounded-3xl p-4 sm:p-6 gold-border luxury-shadow space-y-4">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-gold-400/20">
           <h3 class="font-royal text-base sm:text-lg font-bold text-emeraldRoyal">Today's Prayer Timings</h3>
@@ -229,252 +240,163 @@
         </div>
 
         <div class="grid grid-cols-3 sm:grid-cols-6 gap-2.5 sm:gap-3 text-center">
-          <div class="p-3 sm:p-4 rounded-2xl bg-pearl gold-border">
-            <p class="text-[11px] font-semibold text-slate-500">Fajr</p>
-            <p class="text-lg sm:text-xl font-bold text-emeraldRoyal mt-1" id="t-Fajr">--:--</p>
-          </div>
-          <div class="p-3 sm:p-4 rounded-2xl bg-pearl gold-border">
-            <p class="text-[11px] font-semibold text-slate-500">Sunrise</p>
-            <p class="text-lg sm:text-xl font-bold text-gold-600 mt-1" id="t-Sunrise">--:--</p>
-          </div>
-          <div class="p-3 sm:p-4 rounded-2xl bg-pearl gold-border">
-            <p class="text-[11px] font-semibold text-slate-500">Dhuhr</p>
-            <p class="text-lg sm:text-xl font-bold text-emeraldRoyal mt-1" id="t-Dhuhr">--:--</p>
-          </div>
-          <div class="p-3 sm:p-4 rounded-2xl bg-pearl gold-border">
-            <p class="text-[11px] font-semibold text-slate-500">Asr</p>
-            <p class="text-lg sm:text-xl font-bold text-emeraldRoyal mt-1" id="t-Asr">--:--</p>
-          </div>
-          <div class="p-3 sm:p-4 rounded-2xl bg-pearl gold-border">
-            <p class="text-[11px] font-semibold text-slate-500">Maghrib</p>
-            <p class="text-lg sm:text-xl font-bold text-emeraldRoyal mt-1" id="t-Maghrib">--:--</p>
-          </div>
-          <div class="p-3 sm:p-4 rounded-2xl bg-pearl gold-border">
-            <p class="text-[11px] font-semibold text-slate-500">Isha</p>
-            <p class="text-lg sm:text-xl font-bold text-emeraldRoyal mt-1" id="t-Isha">--:--</p>
-          </div>
+          <div class="p-3 sm:p-4 rounded-2xl bg-pearl gold-border"><p class="text-[11px] font-semibold text-slate-500">Fajr</p><p class="text-lg sm:text-xl font-bold text-emeraldRoyal mt-1" id="t-Fajr">--:--</p></div>
+          <div class="p-3 sm:p-4 rounded-2xl bg-pearl gold-border"><p class="text-[11px] font-semibold text-slate-500">Sunrise</p><p class="text-lg sm:text-xl font-bold text-gold-600 mt-1" id="t-Sunrise">--:--</p></div>
+          <div class="p-3 sm:p-4 rounded-2xl bg-pearl gold-border"><p class="text-[11px] font-semibold text-slate-500">Dhuhr</p><p class="text-lg sm:text-xl font-bold text-emeraldRoyal mt-1" id="t-Dhuhr">--:--</p></div>
+          <div class="p-3 sm:p-4 rounded-2xl bg-pearl gold-border"><p class="text-[11px] font-semibold text-slate-500">Asr</p><p class="text-lg sm:text-xl font-bold text-emeraldRoyal mt-1" id="t-Asr">--:--</p></div>
+          <div class="p-3 sm:p-4 rounded-2xl bg-pearl gold-border"><p class="text-[11px] font-semibold text-slate-500">Maghrib</p><p class="text-lg sm:text-xl font-bold text-emeraldRoyal mt-1" id="t-Maghrib">--:--</p></div>
+          <div class="p-3 sm:p-4 rounded-2xl bg-pearl gold-border"><p class="text-[11px] font-semibold text-slate-500">Isha</p><p class="text-lg sm:text-xl font-bold text-emeraldRoyal mt-1" id="t-Isha">--:--</p></div>
         </div>
 
         <div class="pt-2 flex items-center justify-between text-xs text-slate-600">
           <span>Makkah Vocal Adhan Audio Alert</span>
           <div class="flex gap-2">
-            <button onclick="playAdhan()" class="px-3.5 py-1.5 rounded-xl bg-cream border border-gold-400/60 text-emeraldRoyal font-semibold hover:bg-gold-200/40 transition">
-              🔊 Test Adhan
-            </button>
-            <button onclick="stopAdhan()" id="stopAdhanBtn" class="hidden px-3.5 py-1.5 rounded-xl bg-rose-600 text-white font-semibold">
-              ⏹ Stop
-            </button>
+            <button onclick="playAdhan()" class="px-3.5 py-1.5 rounded-xl bg-cream border border-gold-400/60 text-emeraldRoyal font-semibold hover:bg-gold-200/40 transition">🔊 Test Adhan</button>
+            <button onclick="stopAdhan()" id="stopAdhanBtn" class="hidden px-3.5 py-1.5 rounded-xl bg-rose-600 text-white font-semibold">⏹ Stop</button>
           </div>
         </div>
       </div>
 
-      <!-- Daily Zikr Card -->
       <div class="bg-white rounded-3xl p-5 sm:p-6 gold-border luxury-shadow flex flex-col sm:flex-row items-center justify-between gap-4">
         <div class="space-y-1.5 text-center sm:text-left">
           <span class="text-[10px] font-bold uppercase tracking-widest text-gold-500">Daily Sunnah Zikr</span>
-          <p class="font-quran text-xl sm:text-2xl text-emeraldRoyal font-bold" id="dailyZikrAr">سُبْحَانَ اللَّهِ وَبِحَمْدِهِ ، سُبْحَانَ اللَّهِ الْعَظِيمِ</p>
+          <p class="font-arabic text-2xl sm:text-3xl text-emeraldRoyal font-bold" id="dailyZikrAr">سُبْحَانَ اللَّهِ وَبِحَمْدِهِ ، سُبْحَانَ اللَّهِ الْعَظِيمِ</p>
           <p class="text-xs text-slate-600" id="dailyZikrMean">Allah Ta'ala apni tamam tareefon ke sath paak hai, aur wo sabse azim hai. (Sahih Bukhari)</p>
         </div>
-        <button onclick="rotateZikr()" class="w-full sm:w-auto px-4 py-2 rounded-xl bg-pearl border border-gold-400/50 text-xs font-semibold text-emeraldRoyal hover:bg-cream transition whitespace-nowrap">
-          Next Zikr ↻
-        </button>
+        <button onclick="rotateZikr()" class="w-full sm:w-auto px-4 py-2 rounded-xl bg-pearl border border-gold-400/50 text-xs font-semibold text-emeraldRoyal hover:bg-cream transition whitespace-nowrap">Next Zikr ↻</button>
       </div>
     </section>
 
-    <!-- ==================== 2. PAGE-BY-PAGE MUSHAF BOOK READER ==================== -->
+    <!-- 2. NOBLE QURAN (30 PARA + SURAH + QARIS + ROMAN URDU) -->
     <section id="sec-quran" class="view-section hidden space-y-4">
-      
-      <!-- Top Control & Navigation Bar -->
       <div class="bg-white rounded-3xl p-4 sm:p-5 gold-border luxury-shadow space-y-3.5">
-        
-        <!-- Row 1: Para (Juz 1-30), Surah, & Direct Page Jump -->
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
           <div>
-            <label class="text-[10px] font-bold uppercase tracking-wider text-gold-600 block mb-1">Jump to Para (Juz 1 - 30)</label>
-            <select id="paraDropdown" onchange="jumpToParaPage(this.value)" class="w-full px-3 py-2 rounded-xl bg-pearl border border-gold-400/60 text-xs font-bold text-emeraldRoyal focus:outline-none">
-              <option value="">-- Select Para (1 - 30) --</option>
-            </select>
+            <label class="text-[10px] font-bold uppercase tracking-wider text-gold-600 block mb-1">1. Open by Para (Juz 1 - 30)</label>
+            <select id="paraDropdown" onchange="jumpToPara(this.value)" class="w-full px-3.5 py-2.5 rounded-xl bg-pearl border border-gold-400/60 text-xs font-bold text-emeraldRoyal focus:outline-none"></select>
           </div>
-
           <div>
-            <label class="text-[10px] font-bold uppercase tracking-wider text-gold-600 block mb-1">Jump to Surah (1 - 114)</label>
-            <select id="surahDropdown" onchange="jumpToSurahPage(this.value)" class="w-full px-3 py-2 rounded-xl bg-pearl border border-gold-400/60 text-xs font-bold text-emeraldRoyal focus:outline-none">
-              <option value="1">1. Al-Fatihah (الفاتحة)</option>
-            </select>
-          </div>
-
-          <div>
-            <label class="text-[10px] font-bold uppercase tracking-wider text-gold-600 block mb-1">Go to Page (1 - 604)</label>
-            <div class="flex gap-1.5">
-              <input type="number" id="pageJumpInput" min="1" max="604" value="1" class="w-full px-3 py-2 rounded-xl bg-pearl border border-gold-400/60 text-xs font-bold text-emeraldRoyal focus:outline-none">
-              <button onclick="jumpToSpecificPage()" class="px-3.5 py-2 rounded-xl bg-emeraldRoyal text-gold-300 text-xs font-bold hover:bg-emeraldCard transition shrink-0">Go</button>
-            </div>
+            <label class="text-[10px] font-bold uppercase tracking-wider text-gold-600 block mb-1">2. Or Open by Surah (1 - 114)</label>
+            <select id="surahDropdown" onchange="jumpToSurah(this.value)" class="w-full px-3.5 py-2.5 rounded-xl bg-pearl border border-gold-400/60 text-xs font-bold text-emeraldRoyal focus:outline-none"></select>
           </div>
         </div>
 
-        <!-- Row 2: Reading Mode, Font Size & Bookmark Drawer -->
-        <div class="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-gold-400/20">
-          <!-- Mode Switcher -->
-          <div class="flex bg-pearl p-1 rounded-xl border border-gold-400/40 text-[11px]">
-            <button onclick="setQuranLang('arabic')" id="lang-arabic" class="lang-btn px-2.5 py-1 rounded-lg font-bold bg-emeraldRoyal text-gold-300 transition">
-              📖 Mushaf Page
-            </button>
-            <button onclick="setQuranLang('urdu')" id="lang-urdu" class="lang-btn px-2.5 py-1 rounded-lg font-semibold text-slate-600 hover:text-emeraldRoyal transition">
-              اردو ترجمہ
-            </button>
-            <button onclick="setQuranLang('roman')" id="lang-roman" class="lang-btn px-2.5 py-1 rounded-lg font-semibold text-slate-600 hover:text-emeraldRoyal transition">
-              Roman Urdu
-            </button>
+        <div class="grid grid-cols-1 sm:grid-cols-12 gap-2.5 pt-2 border-t border-gold-400/20 items-center">
+          <div class="sm:col-span-5 grid grid-cols-3 bg-pearl p-1 rounded-xl border border-gold-400/40 text-[11px] text-center">
+            <button onclick="setQuranMode('arabic')" id="mode-arabic" class="qmode-btn py-1.5 rounded-lg font-bold bg-emeraldRoyal text-gold-300 transition">Mushaf Only</button>
+            <button onclick="setQuranMode('urdu')" id="mode-urdu" class="qmode-btn py-1.5 rounded-lg font-semibold text-slate-600 hover:text-emeraldRoyal transition">اردو ترجمہ</button>
+            <button onclick="setQuranMode('roman')" id="mode-roman" class="qmode-btn py-1.5 rounded-lg font-semibold text-slate-600 hover:text-emeraldRoyal transition">Roman Urdu</button>
           </div>
 
-          <!-- Font Resizer & Bookmarks -->
-          <div class="flex items-center gap-1.5 flex-wrap">
+          <div class="sm:col-span-4 flex items-center justify-center gap-1.5 bg-pearl px-2.5 py-1.5 rounded-xl border border-gold-400/40 text-xs">
+            <button onclick="changeArabicFontSize(-2)" class="px-2 py-0.5 rounded bg-white border border-gold-400/50 font-bold text-emeraldRoyal">A-</button>
+            <span class="text-[10px] font-bold text-slate-500 px-1">Font</span>
+            <button onclick="changeArabicFontSize(2)" class="px-2 py-0.5 rounded bg-white border border-gold-400/50 font-bold text-emeraldRoyal">A+</button>
+            <span class="text-gold-400/50 mx-1">|</span>
+            <button onclick="bookmarkCurrentPage()" id="bookmarkPageBtn" class="px-2.5 py-0.5 rounded bg-emeraldRoyal text-gold-300 font-bold text-[11px]">🔖 Save Page <span id="btnPageNumLabel">1</span></button>
+          </div>
+
+          <div class="sm:col-span-3 flex items-center justify-end gap-1.5">
+            <button onclick="toggleBookmarksDrawer()" class="w-full sm:w-auto px-3 py-2 rounded-xl bg-cream border border-gold-400/60 text-xs font-bold text-emeraldRoyal">📚 Saved (<span id="savedBookmarkCount">0</span>)</button>
+          </div>
+        </div>
+
+        <!-- Famous Qari Audio Player -->
+        <div class="pt-2 border-t border-gold-400/20 flex flex-col sm:flex-row sm:items-center justify-between gap-2 bg-pearl/70 p-2.5 rounded-2xl border border-gold-400/30">
+          <div class="flex items-center gap-2 flex-1">
+            <span class="text-xs font-bold text-gold-600 shrink-0">🎙️ Qari:</span>
+            <select id="qariSelector" onchange="changeQariReciter()" class="w-full sm:w-64 px-2.5 py-1.5 rounded-xl bg-white border border-gold-400/50 text-xs font-bold text-emeraldRoyal focus:outline-none">
+              <option value="sudais">Sheikh Abdurrahman Al-Sudais (Fast)</option>
+              <option value="maher">Sheikh Maher Al-Muaiqly (Fast)</option>
+              <option value="shuraim">Sheikh Saud Al-Shuraim (Hadr)</option>
+              <option value="dosari">Sheikh Yasser Al-Dosari</option>
+              <option value="ghamdi">Sheikh Saad Al-Ghamdi</option>
+              <option value="alafasy">Sheikh Mishary Rashid Alafasy</option>
+            </select>
+          </div>
+          <div class="flex items-center gap-1.5">
             <audio id="surahTilawatAudio" class="hidden"></audio>
-            
-            <!-- Qari Selector (Fast / Medium / Emotional) -->
-            <select id="qariSelector" onchange="changeSurahQari()" class="px-2.5 py-1.5 rounded-xl bg-pearl border border-gold-400/60 text-xs font-bold text-emeraldRoyal focus:outline-none">
-              <option value="https://server11.mp3quran.net/sds/">⚡ Sheikh Abdurrahman Al-Sudais (Haram Makkah)</option>
-              <option value="https://server12.mp3quran.net/maher/">⚡ Sheikh Maher Al-Muaiqly (Fast & Rhythmic)</option>
-              <option value="https://server7.mp3quran.net/shur/">⚡ Sheikh Saud Al-Shuraim (Taraweeh Pace)</option>
-              <option value="https://server11.mp3quran.net/yasser/">🎙️ Sheikh Yasser Al-Dosari (Soulful Makkah)</option>
-              <option value="https://server7.mp3quran.net/s_gmd/">🎙️ Sheikh Saad Al-Ghamdi (Crystal Clear)</option>
-              <option value="https://server8.mp3quran.net/afs/">🎙️ Sheikh Mishary Rashid Alafasy</option>
-            </select>
-
-            <!-- Speed Control Button -->
-            <button onclick="cycleTilawatSpeed()" id="tilawatSpeedBtn" class="px-2.5 py-1.5 rounded-xl bg-cream border border-gold-400 text-xs font-mono font-bold text-emeraldRoyal hover:bg-gold-200/50 transition" title="Change Recitation Speed">
-              1.0x
+            <button onclick="toggleSurahTilawat()" id="tilawatPlayBtn" class="flex-1 sm:flex-none px-4 py-1.5 rounded-xl bg-emeraldRoyal text-gold-300 text-xs font-bold flex items-center justify-center gap-2">
+              <span id="tilawatPlayIcon">▶</span>
+              <span id="tilawatPlayLabel">Listen Surah</span>
             </button>
-
-            <button onclick="toggleSurahTilawat()" id="tilawatAudioBtn" class="px-3 py-1.5 rounded-xl bg-emeraldRoyal text-gold-300 text-xs font-bold hover:bg-emeraldCard transition flex items-center gap-1.5">
-              <span id="tilawatPlayIcon">▶</span> <span id="tilawatBtnText">Listen Surah</span>
-            </button>
-
-            <button onclick="adjustArabicSize(-2)" class="w-8 h-8 rounded-xl bg-pearl border border-gold-400/50 text-xs font-bold text-emeraldRoyal hover:bg-cream">A-</button>
-            <button onclick="adjustArabicSize(2)" class="w-8 h-8 rounded-xl bg-pearl border border-gold-400/50 text-xs font-bold text-emeraldRoyal hover:bg-cream">A+</button>
-            
-            <button onclick="bookmarkCurrentPage()" id="bookmarkPageBtn" class="px-3 py-1.5 rounded-xl bg-cream border border-gold-400 text-xs font-bold text-emeraldRoyal hover:bg-gold-200/50 transition flex items-center gap-1">
-              <span>🔖</span> <span class="hidden sm:inline">Save Page</span> <span id="btnPageNumLabel">1</span>
-            </button>
-
-            <button onclick="toggleBookmarksDrawer()" class="px-3 py-1.5 rounded-xl bg-emeraldRoyal text-gold-300 text-xs font-bold hover:bg-emeraldCard transition flex items-center gap-1">
-              <span>Saved</span> (<span id="bookmarkCount">0</span>)
-            </button>
+            <button onclick="cyclePlaybackSpeed()" id="speedToggleBtn" class="px-2.5 py-1.5 rounded-xl bg-white border border-gold-400/60 text-xs font-bold text-emeraldRoyal">1.0x</button>
           </div>
         </div>
 
-        <!-- Saved Page Bookmarks Drawer -->
-        <div id="bookmarksDrawer" class="hidden pt-3 border-t border-gold-400/30 space-y-2">
-          <div class="flex items-center justify-between">
-            <span class="text-xs font-bold text-emeraldRoyal">Saved Bookmarked Pages</span>
-            <button onclick="toggleBookmarksDrawer()" class="text-xs text-slate-400 hover:text-slate-600">Close ✕</button>
-          </div>
-          <div id="bookmarksList" class="grid grid-cols-1 sm:grid-cols-2 gap-2 max-h-48 overflow-y-auto">
-            <p class="text-xs text-slate-400">No bookmarks saved yet.</p>
-          </div>
+        <div id="bookmarksDrawer" class="hidden pt-3 border-t border-gold-400/25 space-y-2">
+          <p class="text-[11px] font-bold text-gold-600 uppercase">Saved Bookmarks (Tap to Open Page):</p>
+          <div id="savedBookmarksList" class="flex flex-wrap gap-2"></div>
         </div>
       </div>
 
-      <!-- BOOK PAGE CONTAINER (SWIPEABLE ON MOBILE) -->
-      <div id="bookTouchArea" class="mushaf-page rounded-3xl p-4 sm:p-8 space-y-5 relative select-none">
-        
-        <!-- Top Page Header (Para & Surah Name + Para-Specific Page Count) -->
-        <div class="flex flex-wrap items-center justify-between gap-2 pb-3 border-b-2 border-gold-400/50 text-xs font-bold text-emeraldRoyal">
-          <span id="pageMetaHeader" class="bg-cream px-3 py-1 rounded-full border border-gold-400/40">Para 1 • Al-Fatihah</span>
-          <span id="pageIndicatorTop" class="font-mono text-gold-600 bg-pearl px-3 py-1 rounded-full border border-gold-400/30">Para 1 • Page 1 of 21</span>
+      <!-- Mushaf Book Frame -->
+      <div id="mushafBookFrame" class="bg-white rounded-3xl border-2 border-gold-400 luxury-shadow overflow-hidden">
+        <div class="bg-emeraldRoyal text-white px-4 sm:px-6 py-3 flex items-center justify-between border-b border-gold-400/40">
+          <div class="text-xs font-bold text-gold-300" id="pageParaBadge">Para 1</div>
+          <div class="text-xs sm:text-sm font-royal font-bold tracking-wider text-white" id="pageIndicatorHeader">Page 1 of 20</div>
+          <div class="text-xs font-semibold text-gold-200" id="pageSurahBadge">Al-Fatihah</div>
         </div>
 
-        <!-- Page Verses Content -->
-        <div id="mushafPageContent" class="min-h-[360px] flex flex-col justify-center">
-          <p class="font-quran text-3xl text-gold-500 text-center">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
-          <p class="text-xs text-slate-500 text-center mt-2">Loading Page 1...</p>
-        </div>
-
-        <!-- Bottom Page Turn Controls (Para-Specific Page Indicator) -->
-        <div class="pt-4 border-t-2 border-gold-400/50 flex items-center justify-between gap-2">
-          <button onclick="turnNextPage()" class="flex-1 sm:flex-none px-5 py-2.5 rounded-2xl bg-emeraldRoyal text-gold-300 text-xs font-bold hover:bg-emeraldCard transition flex items-center justify-center gap-1.5 shadow">
-            <span>← Next Page</span>
-          </button>
-
-          <div class="text-center">
-            <span class="block text-xs font-mono font-bold text-emeraldRoyal" id="pageIndicatorBottom">Para 1 • Page 1 / 21</span>
-            <span class="block text-[10px] text-slate-400 font-mono" id="globalPageSubLabel">(Mushaf Page 1 of 604)</span>
+        <div id="mushafPageContent" class="p-4 sm:p-8 min-h-[420px] bg-gradient-to-b from-pearl/60 via-white to-pearl/60">
+          <div class="text-center py-16 text-slate-500">
+            <p class="font-arabic text-4xl text-gold-500 mb-2">بِسْمِ ٱللَّٰهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</p>
+            <p class="text-xs">Opening Noble Quran...</p>
           </div>
-
-          <button onclick="turnPrevPage()" class="flex-1 sm:flex-none px-5 py-2.5 rounded-2xl bg-cream border border-gold-400 text-emeraldRoyal text-xs font-bold hover:bg-gold-200/50 transition flex items-center justify-center gap-1.5">
-            <span>Prev Page →</span>
-          </button>
         </div>
-        <p class="text-center text-[10px] text-slate-400 md:hidden">Tip: Swipe right for Next Page, Swipe left for Previous Page</p>
+
+        <div class="bg-cream/90 px-4 py-3.5 border-t border-gold-400/30 flex items-center justify-between gap-2">
+          <button onclick="prevQuranPage()" id="prevPageBtn" class="px-4 py-2 rounded-xl bg-emeraldRoyal text-gold-300 text-xs font-bold disabled:opacity-40">← Previous</button>
+          <div class="flex items-center gap-1.5 text-xs">
+            <span class="text-slate-600 font-semibold hidden sm:inline">Go to Page:</span>
+            <input type="number" id="pageJumpInput" min="1" max="604" value="1" onchange="loadQuranPage(parseInt(this.value))" class="w-16 px-2 py-1.5 text-center rounded-lg bg-white border border-gold-400 font-bold text-emeraldRoyal">
+            <span class="text-slate-500 font-bold" id="pageIndicatorFooter">/ 604</span>
+          </div>
+          <button onclick="nextQuranPage()" id="nextPageBtn" class="px-4 py-2 rounded-xl bg-emeraldRoyal text-gold-300 text-xs font-bold disabled:opacity-40">Next →</button>
+        </div>
       </div>
     </section>
 
-    <!-- ==================== 3. ROYAL DIGITAL TASBEEH PRO ==================== -->
+    <!-- 3. TASBEEH PRO -->
     <section id="sec-tasbeeh" class="view-section hidden max-w-md mx-auto">
       <div class="bg-white rounded-3xl p-6 sm:p-8 gold-border luxury-shadow text-center space-y-5">
         <div>
-          <h3 class="font-royal text-xl font-bold text-emeraldRoyal">Royal Dhikr Sanctuary Pro</h3>
-          <p class="text-xs text-gold-600 font-semibold mt-1">Acoustic Bead Click • Custom Dhikr • Target Limits</p>
+          <h3 class="font-royal text-xl font-bold text-emeraldRoyal">Royal Tasbeeh Pro</h3>
+          <p class="text-xs text-slate-500 mt-1">Acoustic Click • Custom Dhikr • Target Limits</p>
         </div>
-
         <div class="space-y-2">
-          <select id="dhikrPicker" onchange="updateDhikrDisplay()" class="w-full px-4 py-2.5 rounded-xl bg-pearl border border-gold-400/60 text-xs font-bold text-emeraldRoyal focus:outline-none">
+          <select id="dhikrPicker" onchange="updateDhikrDisplay()" class="w-full px-4 py-2.5 rounded-xl bg-pearl border border-gold-400/60 text-xs font-bold text-emeraldRoyal">
             <option value="SubhanAllah">SubhanAllah (سُبْحَانَ اللَّهِ)</option>
             <option value="Alhamdulillah">Alhamdulillah (الْحَمْدُ لِلَّهِ)</option>
             <option value="AllahuAkbar">Allahu Akbar (اللَّهُ أَكْبَرُ)</option>
             <option value="Astaghfirullah">Astaghfirullah (أَسْتَغْفِرُ اللَّهَ)</option>
             <option value="Durood">Durood-e-Pak (اللَّهُمَّ صَلِّ عَلَىٰ مُحَمَّدٍ)</option>
             <option value="Kalimah">Kalimah Tayyibah (لَا إِلٰهَ إِلَّا اللَّهُ)</option>
-            <option value="Custom">✨ Custom Dhikr / Apna Zikr</option>
+            <option value="Custom">✨ Custom Dhikr</option>
           </select>
-
-          <div id="customDhikrBox" class="hidden">
-            <input type="text" id="customDhikrText" oninput="applyCustomDhikr()" placeholder="Type your custom Dhikr or Wazifa..." class="w-full px-3.5 py-2 rounded-xl bg-pearl border border-gold-400/60 text-xs text-emeraldRoyal focus:outline-none">
-          </div>
+          <input type="text" id="customDhikrBox" oninput="updateCustomDhikrText()" placeholder="Type your custom Zikr..." class="hidden w-full px-3.5 py-2 rounded-xl bg-pearl border border-gold-400 text-xs">
         </div>
-
-        <!-- Target Selector Pills -->
         <div class="flex items-center justify-center gap-2 text-xs font-bold">
           <span class="text-slate-500">Target:</span>
-          <button onclick="setTasbeehTarget(33)" id="tBtn-33" class="px-2.5 py-1 rounded-lg border border-gold-400 bg-emeraldRoyal text-gold-300">33</button>
-          <button onclick="setTasbeehTarget(99)" id="tBtn-99" class="px-2.5 py-1 rounded-lg border border-gold-400 bg-pearl text-emeraldRoyal">99</button>
-          <button onclick="setTasbeehTarget(100)" id="tBtn-100" class="px-2.5 py-1 rounded-lg border border-gold-400 bg-pearl text-emeraldRoyal">100</button>
-          <button onclick="setTasbeehTarget(0)" id="tBtn-0" class="px-2.5 py-1 rounded-lg border border-gold-400 bg-pearl text-emeraldRoyal">∞</button>
+          <button onclick="setTasbeehLimit(33)" id="lim-33" class="px-2.5 py-1 rounded-lg border border-gold-400 bg-emeraldRoyal text-gold-300">33</button>
+          <button onclick="setTasbeehLimit(99)" id="lim-99" class="px-2.5 py-1 rounded-lg border border-gold-400 bg-white text-slate-700">99</button>
+          <button onclick="setTasbeehLimit(100)" id="lim-100" class="px-2.5 py-1 rounded-lg border border-gold-400 bg-white text-slate-700">100</button>
+          <button onclick="setTasbeehLimit(0)" id="lim-0" class="px-2.5 py-1 rounded-lg border border-gold-400 bg-white text-slate-700">∞</button>
         </div>
-
-        <div class="py-1">
-          <p class="font-quran text-3xl sm:text-4xl text-emeraldRoyal" id="dhikrArText">سُبْحَانَ اللَّهِ</p>
-          <p class="text-[11px] text-slate-500 mt-1" id="dhikrMeanText">Allah Ta'ala har aib aur kami se paak hai</p>
-        </div>
-
+        <p class="font-arabic text-3xl sm:text-4xl text-emeraldRoyal py-1 font-bold" id="dhikrArText">سُبْحَانَ اللَّهِ</p>
         <button onclick="countTasbeeh()" class="w-44 h-44 mx-auto rounded-full bg-gradient-to-tr from-emeraldRoyal to-emeraldCard border-4 border-gold-400 shadow-xl flex flex-col items-center justify-center active:scale-95 transition">
           <span class="font-mono text-5xl font-bold text-gold-300" id="tasbeehVal">0</span>
-          <span class="text-[10px] uppercase tracking-widest text-slate-300 mt-1">Tap Bead</span>
+          <span class="text-[10px] uppercase tracking-widest text-slate-300 mt-1">Tap</span>
         </button>
-
         <div class="flex items-center justify-between px-4 pt-2 text-xs font-semibold">
           <button onclick="resetTasbeeh()" class="text-rose-600 hover:underline font-bold">Reset</button>
-          <span class="text-slate-500">Target: <b id="tasbeehTargetLabel" class="text-emeraldRoyal">33</b></span>
+          <span class="text-slate-500">Target: <b id="tasbeehTargetLbl">33</b></span>
           <span class="text-emeraldRoyal">Laps: <b id="tasbeehLaps">0</b></span>
         </div>
       </div>
     </section>
 
-    <!-- ==================== 4. SAHIH HADITHS ==================== -->
-    <section id="sec-hadith" class="view-section hidden space-y-5">
-      <div class="bg-white rounded-3xl p-5 sm:p-6 gold-border luxury-shadow space-y-4">
-        <div class="flex items-center justify-between pb-3 border-b border-gold-400/20">
-          <div>
-            <h3 class="font-royal text-lg sm:text-xl font-bold text-emeraldRoyal">Authentic Sahih Hadiths</h3>
-            <p class="text-xs text-slate-500">Sahih al-Bukhari & Sahih Muslim Riwayaat</p>
-          </div>
-          <span class="text-xs font-bold text-gold-600">Ahle Sunnah</span>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="hadithsGrid"></div>
-      </div>
-    </section>
-
-    <!-- ==================== 5. CLEAN DUAL CALENDAR ==================== -->
+    <!-- 4. DUAL CALENDAR -->
     <section id="sec-calendar" class="view-section hidden">
       <div class="bg-white rounded-3xl p-4 sm:p-6 gold-border luxury-shadow space-y-4">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-gold-400/20">
@@ -484,95 +406,65 @@
           </div>
           <span class="px-3 py-1.5 rounded-xl bg-emeraldRoyal text-gold-300 text-xs font-bold self-start sm:self-auto" id="calMonthBadge">Loading...</span>
         </div>
-
         <div class="grid grid-cols-7 gap-1 sm:gap-2 text-center text-[11px] sm:text-xs font-bold text-slate-500">
           <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span class="text-gold-600">Fri</span><span>Sat</span>
         </div>
-
         <div id="calGrid" class="grid grid-cols-7 gap-1 sm:gap-2 text-center"></div>
       </div>
     </section>
 
-    <!-- ==================== 6. SUNNAH CHECKLIST & MASNOON DUAS ==================== -->
+    <!-- 5. SUNNAH, DUAS & HADITH -->
     <section id="sec-sunnah" class="view-section hidden space-y-5">
       <div class="bg-white rounded-3xl p-5 sm:p-6 gold-border luxury-shadow space-y-4">
         <div class="flex items-center justify-between pb-3 border-b border-gold-400/20">
-          <div>
-            <h3 class="font-royal text-base sm:text-lg font-bold text-emeraldRoyal">Daily Sunnah Checklist</h3>
-            <p class="text-[11px] text-slate-500">Ahle Sunnah Ma'mulaat & Sunan-e-Nabawiyyah ﷺ</p>
-          </div>
+          <h3 class="font-royal text-base sm:text-lg font-bold text-emeraldRoyal">Daily Sunnah Checklist</h3>
           <span class="text-xs font-bold text-gold-600" id="sunnahScore">0% Completed</span>
         </div>
         <div id="sunnahList" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>
       </div>
 
       <div class="bg-white rounded-3xl p-5 sm:p-6 gold-border luxury-shadow space-y-4">
-        <h3 class="font-royal text-base sm:text-lg font-bold text-emeraldRoyal pb-2 border-b border-gold-400/20">Hisn al-Muslim — Masnoon Duas</h3>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="duasGrid"></div>
-      </div>
-    </section>
-
-    <!-- ==================== 7. RAMADAN SUITE ==================== -->
-    <section id="sec-ramadan" class="view-section hidden space-y-5">
-      <div class="bg-white rounded-3xl p-5 sm:p-6 gold-border luxury-shadow space-y-4">
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-gold-400/20">
-          <div>
-            <h3 class="font-royal text-lg sm:text-xl font-bold text-emeraldRoyal">Ramadan Mubarak Suite</h3>
-            <p class="text-xs text-slate-500">30-Day Sehri & Iftar Timetable & Roza Duas</p>
-          </div>
-          <span class="px-3 py-1 rounded-full bg-gold-200/40 text-gold-700 text-xs font-bold self-start">Ramadan 1448 AH</span>
-        </div>
-
+        <h3 class="font-royal text-base sm:text-lg font-bold text-emeraldRoyal pb-2 border-b border-gold-400/20">Hisn al-Muslim (Masnoon Duas)</h3>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div class="p-4 rounded-2xl bg-pearl gold-border space-y-1.5">
-            <p class="text-[10px] font-bold uppercase tracking-wider text-gold-600">Sehri Niyyat (Roza Rakhne Ki Dua)</p>
-            <p class="font-quran text-xl text-right text-emeraldRoyal" dir="rtl">وَبِصَوْمِ غَدٍ نَّوَيْتُ مِنْ شَهْرِ رَمَضَانَ</p>
-            <p class="text-xs text-slate-600">Aur maine Ramadan ke kal ke roze ki niyat ki.</p>
+          <div class="p-4 rounded-2xl bg-pearl gold-border space-y-2">
+            <p class="text-xs font-bold text-gold-600">Sone Ki Dua (Before Sleeping)</p>
+            <p class="font-arabic text-2xl text-right text-emeraldRoyal font-bold" dir="rtl">اللَّهُمَّ بِاسْمِكَ أَمُوتُ وَأَحْيَا</p>
+            <p class="text-xs text-slate-600">Aye Allah! Tere hi naam ke sath main marta hoon aur jeeta hoon. (Sahih Bukhari)</p>
           </div>
-          <div class="p-4 rounded-2xl bg-pearl gold-border space-y-1.5">
-            <p class="text-[10px] font-bold uppercase tracking-wider text-gold-600">Iftar Dua (Roza Kholne Ki Dua)</p>
-            <p class="font-quran text-xl text-right text-emeraldRoyal" dir="rtl">اللَّهُمَّ إِنِّي لَكَ صُمْتُ وَبِكَ آمَنْتُ وَعَلَيْكَ تَوَكَّلْتُ وَعَلَىٰ رِزْقِكَ أَفْطَرْتُ</p>
-            <p class="text-xs text-slate-600">Aye Allah! Maine tere hi liye roza rakha aur tere hi rizq se iftar kiya.</p>
+          <div class="p-4 rounded-2xl bg-pearl gold-border space-y-2">
+            <p class="text-xs font-bold text-gold-600">Ghar Se Nikalne Ki Dua</p>
+            <p class="font-arabic text-2xl text-right text-emeraldRoyal font-bold" dir="rtl">بِسْمِ اللَّهِ تَوَكَّلْتُ عَلَى اللَّهِ وَلَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللَّهِ</p>
+            <p class="text-xs text-slate-600">Allah ke naam ke sath, maine Allah par bharosa kiya. (Abu Dawud)</p>
           </div>
         </div>
+      </div>
 
-        <div class="overflow-x-auto">
-          <table class="w-full text-xs text-left border-collapse">
-            <thead>
-              <tr class="bg-emeraldRoyal text-gold-300 font-royal">
-                <th class="p-2.5 rounded-l-xl">Roza</th>
-                <th class="p-2.5">Hijri Date</th>
-                <th class="p-2.5">Sehri End (Fajr)</th>
-                <th class="p-2.5 rounded-r-xl">Iftar (Maghrib)</th>
-              </tr>
-            </thead>
-            <tbody id="ramadanTableBody" class="divide-y divide-gold-400/20"></tbody>
-          </table>
+      <div class="bg-white rounded-3xl p-5 sm:p-6 gold-border luxury-shadow space-y-4">
+        <h3 class="font-royal text-base sm:text-lg font-bold text-emeraldRoyal pb-2 border-b border-gold-400/20">Authentic Sahih Hadiths</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="p-4 rounded-2xl bg-pearl gold-border space-y-2">
+            <p class="text-xs font-bold text-gold-600">Sahih al-Bukhari 1 (Niyyat Ka Bayan)</p>
+            <p class="font-arabic text-2xl text-right text-emeraldRoyal font-bold" dir="rtl">إِنَّمَا الأَعْمَالُ بِالنِّيَّاتِ، وَإِنَّمَا لِكُلِّ امْرِئٍ مَا نَوَى</p>
+            <p class="text-xs text-slate-600">Tamam aamaal ka daromadar sirf niyyaton par hai, aur har shakhs ko wahi milega jiski usne niyyat ki.</p>
+          </div>
+          <div class="p-4 rounded-2xl bg-pearl gold-border space-y-2">
+            <p class="text-xs font-bold text-gold-600">Sahih al-Bukhari 10 (Sachhe Musalman Ki Shanakht)</p>
+            <p class="font-arabic text-2xl text-right text-emeraldRoyal font-bold" dir="rtl">الْمُسْلِمُ مَنْ سَلِمَ الْمُسْلِمُونَ مِنْ لِسَانِهِ وَيَدِهِ</p>
+            <p class="text-xs text-slate-600">Sachha Musalman wo hai jiski zaban aur hath ki takleef se doosre Musalman mehfooz rahein.</p>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- ==================== 8. ZAKAT CALCULATOR ==================== -->
+    <!-- 6. ZAKAT CALCULATOR -->
     <section id="sec-zakat" class="view-section hidden max-w-lg mx-auto">
       <div class="bg-white rounded-3xl p-5 sm:p-6 gold-border luxury-shadow space-y-4">
         <h3 class="font-royal text-lg sm:text-xl font-bold text-emeraldRoyal">Shariah Zakat Calculator (2.5%)</h3>
         <div class="space-y-3 text-xs">
-          <div>
-            <label class="font-semibold text-slate-700">Cash & Bank Balance (₹)</label>
-            <input type="number" id="z-cash" value="0" oninput="calcZakat()" class="w-full mt-1 p-2.5 rounded-xl bg-pearl border border-gold-400/50">
-          </div>
-          <div>
-            <label class="font-semibold text-slate-700">Gold Value (₹)</label>
-            <input type="number" id="z-gold" value="0" oninput="calcZakat()" class="w-full mt-1 p-2.5 rounded-xl bg-pearl border border-gold-400/50">
-          </div>
-          <div>
-            <label class="font-semibold text-slate-700">Silver Value (₹)</label>
-            <input type="number" id="z-silver" value="0" oninput="calcZakat()" class="w-full mt-1 p-2.5 rounded-xl bg-pearl border border-gold-400/50">
-          </div>
-          <div>
-            <label class="font-semibold text-rose-700">Debts / Karza to Deduct (₹)</label>
-            <input type="number" id="z-debt" value="0" oninput="calcZakat()" class="w-full mt-1 p-2.5 rounded-xl bg-pearl border border-rose-300">
-          </div>
+          <div><label class="font-semibold text-slate-700">Cash & Bank Balance (₹)</label><input type="number" id="z-cash" value="0" oninput="calcZakat()" class="w-full mt-1 p-2.5 rounded-xl bg-pearl border border-gold-400/50"></div>
+          <div><label class="font-semibold text-slate-700">Gold Value (₹)</label><input type="number" id="z-gold" value="0" oninput="calcZakat()" class="w-full mt-1 p-2.5 rounded-xl bg-pearl border border-gold-400/50"></div>
+          <div><label class="font-semibold text-slate-700">Silver Value (₹)</label><input type="number" id="z-silver" value="0" oninput="calcZakat()" class="w-full mt-1 p-2.5 rounded-xl bg-pearl border border-gold-400/50"></div>
+          <div><label class="font-semibold text-rose-700">Debts / Karza to Deduct (₹)</label><input type="number" id="z-debt" value="0" oninput="calcZakat()" class="w-full mt-1 p-2.5 rounded-xl bg-pearl border border-rose-300"></div>
         </div>
         <div class="p-4 rounded-2xl bg-emeraldRoyal text-white text-center space-y-1">
           <p class="text-xs text-gold-300">Net Zakatable Wealth: <b id="z-net">₹ 0</b></p>
@@ -584,67 +476,40 @@
   </main>
 
   <script>
-    // Navigation Switcher
     function showSection(id) {
       document.querySelectorAll('.view-section').forEach(el => el.classList.add('hidden'));
-      document.querySelectorAll('.nav-pill').forEach(btn => {
-        btn.classList.remove('active');
-        btn.classList.add('text-slate-600');
-      });
+      document.querySelectorAll('.nav-pill').forEach(btn => { btn.classList.remove('active'); btn.classList.add('text-slate-600'); });
       const activePill = document.getElementById(`pill-${id}`);
-      if (activePill) {
-        activePill.classList.add('active');
-        activePill.classList.remove('text-slate-600');
-      }
-
+      if (activePill) { activePill.classList.add('active'); activePill.classList.remove('text-slate-600'); }
       document.querySelectorAll('.mob-nav').forEach(btn => btn.classList.remove('active'));
       const activeMob = document.getElementById(`mob-${id}`);
       if (activeMob) activeMob.classList.add('active');
-
-      const sec = document.getElementById(`sec-${id}`);
-      if (sec) sec.classList.remove('hidden');
+      document.getElementById(`sec-${id}`).classList.remove('hidden');
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // Adhan Audio Engine
-    let adhanOn = true;
-    let activeAudio = null;
+    let adhanOn = true, activeAudio = null;
     const adhanStream = "https://archive.org/download/adhan.recordings.from.doha.qatar/Adhan_Doha_Qatar_02_Dhuhr_Adhan.mp3";
-
     function toggleAdhanSound() {
       adhanOn = !adhanOn;
       document.getElementById('adhanLabel').innerText = adhanOn ? "Adhan: ON" : "Adhan: OFF";
       document.getElementById('adhanBell').innerText = adhanOn ? "🔔" : "🔕";
       if (adhanOn && Notification.permission !== 'granted') Notification.requestPermission();
     }
-
     function playAdhan() {
       stopAdhan();
       activeAudio = new Audio(adhanStream);
-      activeAudio.play().then(() => {
-        document.getElementById('stopAdhanBtn').classList.remove('hidden');
-      }).catch(() => {
-        const msgBox = document.createElement('div');
-        msgBox.className = "fixed bottom-20 left-1/2 -translate-x-1/2 z-50 bg-emeraldRoyal text-gold-300 px-4 py-2 rounded-xl text-xs font-bold shadow-lg border border-gold-400";
-        msgBox.innerText = "Tap anywhere on screen first to allow browser audio.";
-        document.body.appendChild(msgBox);
-        setTimeout(() => msgBox.remove(), 3500);
-      });
+      activeAudio.play().then(() => document.getElementById('stopAdhanBtn').classList.remove('hidden')).catch(() => alert("Please tap anywhere on screen first to allow audio."));
       activeAudio.onended = stopAdhan;
     }
-
     function stopAdhan() {
-      if (activeAudio) {
-        activeAudio.pause();
-        activeAudio.currentTime = 0;
-      }
+      if (activeAudio) { activeAudio.pause(); activeAudio.currentTime = 0; }
       document.getElementById('stopAdhanBtn').classList.add('hidden');
     }
 
-    // Prayer Timings & Calendar
     let timingsData = null;
     async function loadPrayers() {
-      const city = document.getElementById('cityInput').value.trim() || 'Jaipur';
+      const city = document.getElementById('cityInput').value.trim() || 'Ajmer';
       document.getElementById('cityDisplay').innerText = `${city} • Sunni Hanafi Standard`;
       try {
         const res = await fetch(`https://api.aladhan.com/v1/timingsByCity?city=${city}&country=India&method=1`);
@@ -652,16 +517,11 @@
         if (json.code === 200) {
           const t = json.data.timings;
           timingsData = t;
-          ['Fajr', 'Sunrise', 'Dhuhr', 'Asr', 'Maghrib', 'Isha'].forEach(p => {
-            document.getElementById(`t-${p}`).innerText = t[p];
-          });
-
-          const h = json.data.date.hijri;
-          const g = json.data.date.gregorian;
+          ['Fajr', 'Sunrise', 'Dhuhr', 'Asr', 'Maghrib', 'Isha'].forEach(p => document.getElementById(`t-${p}`).innerText = t[p]);
+          const h = json.data.date.hijri, g = json.data.date.gregorian;
           document.getElementById('topHijriDate').innerText = `${h.day} ${h.month.en} ${h.year} AH`;
           document.getElementById('calMonthBadge').innerText = `${g.month.en} ${g.year} / ${h.month.en} ${h.year} AH`;
           renderDualCalendar(parseInt(h.day), h.month.en, parseInt(g.day), g.month.en, parseInt(g.year));
-          renderRamadanSchedule(t.Fajr, t.Maghrib);
         }
       } catch (e) {}
     }
@@ -671,37 +531,23 @@
       const now = new Date();
       const prayers = ['Fajr', 'Dhuhr', 'Asr', 'Maghrib', 'Isha'].map(name => ({ name, time: timingsData[name] }));
       let next = null, minDiff = Infinity;
-
       prayers.forEach(p => {
         const [hr, mn] = p.time.split(':').map(Number);
-        const target = new Date();
-        target.setHours(hr, mn, 0, 0);
+        const target = new Date(); target.setHours(hr, mn, 0, 0);
         const diff = target - now;
         if (diff > 0 && diff < minDiff) { minDiff = diff; next = p; }
       });
-
       if (!next) {
         next = prayers[0];
         const [hr, mn] = next.time.split(':').map(Number);
-        const target = new Date();
-        target.setDate(target.getDate() + 1);
-        target.setHours(hr, mn, 0, 0);
+        const target = new Date(); target.setDate(target.getDate() + 1); target.setHours(hr, mn, 0, 0);
         minDiff = target - now;
       }
-
       document.getElementById('nextPrayerName').innerText = `${next.name} at ${next.time}`;
       const sec = Math.floor(minDiff / 1000);
-      const h = Math.floor(sec / 3600);
-      const m = Math.floor((sec % 3600) / 60);
-      const s = sec % 60;
+      const h = Math.floor(sec / 3600), m = Math.floor((sec % 3600) / 60), s = sec % 60;
       document.getElementById('countdownClock').innerText = `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
-
-      if (h === 0 && m === 0 && s === 1 && adhanOn) {
-        playAdhan();
-        if (Notification.permission === 'granted') {
-          new Notification(`Waqt-e-${next.name}`, { body: `It is time for ${next.name} prayer.` });
-        }
-      }
+      if (h === 0 && m === 0 && s === 1 && adhanOn) playAdhan();
     }
 
     function renderDualCalendar(hDay, hMonth, gDay, gMonth, gYear) {
@@ -710,17 +556,11 @@
       for (let i = 1; i <= 30; i++) {
         const isToday = i === hDay;
         const d = new Date(gYear, new Date().getMonth(), gDay + (i - hDay));
-        html += `
-          <div class="p-1.5 sm:p-2.5 rounded-xl sm:rounded-2xl border ${isToday ? 'bg-emeraldRoyal text-white border-gold-400 shadow-md' : 'bg-pearl border-gold-400/30'}">
-            <div class="text-xs sm:text-base font-bold ${isToday ? 'text-white' : 'text-emeraldRoyal'}">${d.getDate()} <span class="text-[9px] font-normal hidden sm:inline">${d.toLocaleString('default',{month:'short'})}</span></div>
-            <div class="text-[9px] sm:text-[10px] font-semibold mt-0.5 ${isToday ? 'text-gold-300' : 'text-gold-600'}">${i} ${hMonth.slice(0,4)}</div>
-          </div>
-        `;
+        html += `<div class="p-1.5 sm:p-2.5 rounded-xl sm:rounded-2xl border ${isToday ? 'bg-emeraldRoyal text-white border-gold-400 shadow-md' : 'bg-pearl border-gold-400/30'}"><div class="text-xs sm:text-base font-bold ${isToday ? 'text-white' : 'text-emeraldRoyal'}">${d.getDate()}</div><div class="text-[9px] sm:text-[10px] font-semibold mt-0.5 ${isToday ? 'text-gold-300' : 'text-gold-600'}">${i} ${hMonth.slice(0,4)}</div></div>`;
       }
       grid.innerHTML = html;
     }
 
-    // Zikr Rotator
     const zikrs = [
       { ar: "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ ، سُبْحَانَ اللَّهِ الْعَظِيمِ", mean: "Allah Ta'ala apni tamam tareefon ke sath paak hai, aur wo sabse azim hai. (Sahih Bukhari)" },
       { ar: "لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللَّهِ", mean: "Gunahon se bachne aur neki karne ki taqat sirf Allah ki taraf se hai. (Sahih Bukhari)" },
@@ -733,615 +573,291 @@
       document.getElementById('dailyZikrMean').innerText = zikrs[zIdx].mean;
     }
 
-    // =========================================================================
-    // 604-PAGE MUSHAF BOOK READER (GRACEFUL INDO-PAK CALLIGRAPHY & PARA PAGES)
-    // =========================================================================
-    let currentPageNum = parseInt(localStorage.getItem('sa_last_page') || '1');
+    // Quran Reader Engine
+    let currentPage = parseInt(localStorage.getItem('sa_last_quran_page') || '1');
     let quranMode = 'arabic';
-    let arabicFontSize = parseInt(localStorage.getItem('sa_quran_font_size') || '34');
-    let currentPageData = null;
-    let currentPageSurahNum = 1;
-    let isSurahTilawatPlaying = false;
-    let tilawatSpeed = 1.0;
+    let arabicFontSize = parseInt(localStorage.getItem('sa_arabic_font_size') || '28');
+    let savedBookmarks = JSON.parse(localStorage.getItem('sa_quran_bookmarks') || '[]');
+    let pageCache = {};
+    let currentSurahOnPage = 1;
+    let isTilawatPlaying = false;
+    let currentSpeedIndex = 0;
+    const playbackSpeeds = [1.0, 1.25, 1.5];
 
-    // Starting Mushaf page numbers for Para 1 to 30
-    const paraStartPages = [
-      1, 22, 42, 62, 82, 102, 121, 142, 162, 182,
-      201, 222, 242, 262, 282, 302, 322, 342, 362, 382,
-      402, 422, 442, 462, 482, 502, 522, 542, 562, 582
-    ];
+    const qariServerUrls = {
+      sudais: { name: "Sheikh Sudais", base: "https://server11.mp3quran.net/sds" },
+      maher: { name: "Maher Al-Muaiqly", base: "https://server12.mp3quran.net/maher" },
+      shuraim: { name: "Saud Al-Shuraim", base: "https://server7.mp3quran.net/shur" },
+      dosari: { name: "Yasser Al-Dosari", base: "https://server11.mp3quran.net/yasser" },
+      ghamdi: { name: "Saad Al-Ghamdi", base: "https://server7.mp3quran.net/s_gmd" },
+      alafasy: { name: "Mishary Alafasy", base: "https://server8.mp3quran.net/afs" }
+    };
 
-    const paraNamesList = [
-      "Alif Lam Meem (الٓمٓ)", "Sayaqool (سَيَقُولُ)", "Tilkal Rusul (تِلْكَ الرُّسُلُ)", "Lan Tana Loo (لَنْ تَنَالُوا)",
-      "Wal Mohsanat (وَالْمُحْصَنَاتُ)", "La Yuhibbullah (لَا يُحِبُّ اللَّهُ)", "Wa Iza Samiu (وَإِذَا سَمِعُوا)", "Wa Lau Annana (وَلَوْ أَنَّنَا)",
-      "Qalal Malao (قَالَ الْمَلَأُ)", "Wa A'lamu (وَاعْلَمُوا)", "Yatazeroon (يَعْتَذِرُونَ)", "Wa Mamin Da'abat (وَمَا مِنْ دَابَّةٍ)",
-      "Wa Ma Ubrioo (وَمَا أُبَرِّئُ)", "Rubama (رُبَمَا)", "Subhanallazi (سُبْحَانَ الَّذِي)", "Qal Alam (قَالَ أَلَمْ)",
-      "Aqtarabo (اقْتَرَبَ)", "Qadd Aflaha (قَدْ أَفْلَحَ)", "Wa Qalallazina (وَقَالَ الَّذِينَ)", "A'man Khalaq (أَمَّنْ خَلَقَ)",
-      "Utlu Ma Oohi (اتْلُ مَا أُوحِيَ)", "Wa Manyaqnut (وَمَنْ يَقْنُتْ)", "Wa Mali (وَمَا لِيَ)", "Faman Azlam (فَمَنْ أَظْلَمُ)",
-      "Elahe Yuruddo (إِلَيْهِ يُرَدُّ)", "Ha'a Meem (حمٓ)", "Qala Fama Khatbukum (قَالَ فَمَا خَطْبُكُمْ)", "Qadd Sami Allah (قَدْ سَمِعَ اللَّهُ)",
-      "Tabarakallazi (تَبَارَكَ الَّذِي)", "Amma Yatasa'aloon (عَمَّ يَتَسَاءَلُونَ)"
+    const paraStartPages = [1, 22, 42, 62, 82, 102, 121, 142, 162, 182, 201, 222, 242, 262, 282, 302, 322, 342, 362, 382, 402, 422, 442, 462, 482, 502, 522, 542, 562, 582];
+    const paraNames = [
+      "1. Alif Lam Meem (الم)", "2. Sayaqool (سَيَقُولُ)", "3. Tilkal Rusul (تِلْكَ الرُّسُلُ)", "4. Lan Tana Loo (لَنْ تَنَالُوا)",
+      "5. Wal Mohsanat (وَالْمُحْصَنَاتُ)", "6. La Yuhibbullah (لَا يُحِبُّ اللَّهُ)", "7. Wa Iza Samiu (وَإِذَا سَمِعُوا)", "8. Wa Lau Annana (وَلَوْ أَنَّنَا)",
+      "9. Qalal Malao (قَالَ الْمَلَأُ)", "10. Wa A'lamu (وَاعْلَمُوا)", "11. Yatazeroon (يَعْتَذِرُونَ)", "12. Wa Mamin Da'abat (وَمَا مِنْ دَابَّةٍ)",
+      "13. Wa Ma Ubrioo (وَمَا أُبَرِّئُ)", "14. Rubama (رُبَمَا)", "15. Subhanallazi (سُبْحَانَ الَّذِي)", "16. Qal Alam (قَالَ أَلَمْ)",
+      "17. Aqtarabo (اقْتَرَبَ)", "18. Qadd Aflaha (قَدْ أَفْلَحَ)", "19. Wa Qalallazina (وَقَالَ الَّذِينَ)", "20. A'man Khalaq (أَمَّنْ خَلَقَ)",
+      "21. Utlu Ma Oohi (اتْلُ مَا أُوحِيَ)", "22. Wa Manyaqnut (وَمَنْ يَقْنُتْ)", "23. Wa Mali (وَمَا لِيَ)", "24. Faman Azlam (فَمَنْ أَظْلَمُ)",
+      "25. Elahe Yuruddo (إِلَيْهِ يُرَدُّ)", "26. Ha'a Meem (حم)", "27. Qala Fama Khatbukum (قَالَ فَمَا خَطْبُكُمْ)", "28. Qadd Sami Allah (قَدْ سَمِعَ اللَّهُ)",
+      "29. Tabarakallazi (تَبَارَكَ الَّذِي)", "30. Amma Yatasa'aloon (عَمَّ يَتَسَاءَلُونَ)"
     ];
 
     function initParaList() {
       const pDrop = document.getElementById('paraDropdown');
-      if (!pDrop) return;
-      pDrop.innerHTML = `<option value="">-- Select Para (1 - 30) --</option>` +
-        paraStartPages.map((startPage, idx) =>
-          `<option value="${startPage}">Para ${idx + 1} — ${paraNamesList[idx]}</option>`
-        ).join('');
+      if (pDrop) pDrop.innerHTML = paraNames.map((name, i) => `<option value="${paraStartPages[i]}">Para ${name} — Page ${paraStartPages[i]}</option>`).join('');
     }
 
     function getParaPageStats(globalPage) {
       let paraIdx = 0;
       for (let i = 0; i < paraStartPages.length; i++) {
-        if (globalPage >= paraStartPages[i]) {
-          paraIdx = i;
-        }
+        if (globalPage >= paraStartPages[i]) paraIdx = i; else break;
       }
       const startPage = paraStartPages[paraIdx];
-      const endPage = paraIdx < 29 ? paraStartPages[paraIdx + 1] - 1 : 604;
-      const pageInPara = globalPage - startPage + 1;
-      const totalPagesInPara = endPage - startPage + 1;
-      return {
-        paraNum: paraIdx + 1,
-        pageInPara,
-        totalPagesInPara
-      };
+      const endPage = (paraIdx < 29) ? paraStartPages[paraIdx + 1] - 1 : 604;
+      return { paraNumber: paraIdx + 1, pageInPara: (globalPage - startPage) + 1, totalPagesInPara: (endPage - startPage) + 1 };
     }
 
-    async function initSurahList() {
-      try {
-        const res = await fetch('https://api.alquran.cloud/v1/surah');
-        const json = await res.json();
-        if (json.code === 200) {
-          document.getElementById('surahDropdown').innerHTML = 
-            `<option value="">-- Select Surah (1 - 114) --</option>` +
-            json.data.map(s => `<option value="${s.number}">${s.number}. ${s.englishName} (${s.name.replace(/\u0671/g, '\u0627')})</option>`).join('');
-        }
-      } catch (e) {}
+    function toArabicDigits(num) {
+      return String(num).replace(/\d/g, d => ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'][d]);
     }
 
-    function jumpToParaPage(startPage) {
-      if (!startPage) return;
-      loadQuranPage(parseInt(startPage));
+    function stripInlineBismillah(text, surahNum, ayahNum) {
+      if (ayahNum !== 1 || surahNum === 1 || surahNum === 9) return text;
+      return text.replace(/^بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ\s*/, '').replace(/^بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ\s*/, '').trim();
     }
 
-    async function jumpToSurahPage(surahNum) {
-      if (!surahNum) return;
-      try {
-        const res = await fetch(`https://api.alquran.cloud/v1/ayah/${surahNum}:1`);
-        const json = await res.json();
-        if (json.code === 200 && json.data.page) {
-          loadQuranPage(json.data.page);
-        }
-      } catch (e) {}
-    }
-
-    function jumpToSpecificPage() {
-      const val = parseInt(document.getElementById('pageJumpInput').value);
-      if (val >= 1 && val <= 604) {
-        loadQuranPage(val);
-      }
-    }
-
-    function turnNextPage() {
-      if (currentPageNum < 604) {
-        loadQuranPage(currentPageNum + 1);
-      }
-    }
-
-    function turnPrevPage() {
-      if (currentPageNum > 1) {
-        loadQuranPage(currentPageNum - 1);
-      }
-    }
-
-    // Touch Swipe Gestures for Mobile Book Page Turn
-    let touchStartX = 0;
-    const bookTouchArea = document.getElementById('bookTouchArea');
-    if (bookTouchArea) {
-      bookTouchArea.addEventListener('touchstart', e => {
-        touchStartX = e.changedTouches[0].screenX;
-      }, { passive: true });
-      bookTouchArea.addEventListener('touchend', e => {
-        const diffX = e.changedTouches[0].screenX - touchStartX;
-        if (diffX > 65) turnNextPage();
-        else if (diffX < -65) turnPrevPage();
-      }, { passive: true });
-    }
-
-    async function loadQuranPage(pageNum) {
-      currentPageNum = pageNum;
-      localStorage.setItem('sa_last_page', pageNum);
-
-      const stats = getParaPageStats(pageNum);
-
-      const pageJumpInput = document.getElementById('pageJumpInput');
-      if (pageJumpInput) pageJumpInput.value = pageNum;
-
-      const btnPageNumLabel = document.getElementById('btnPageNumLabel');
-      if (btnPageNumLabel) btnPageNumLabel.innerText = pageNum;
-
-      const pageIndicatorTop = document.getElementById('pageIndicatorTop');
-      if (pageIndicatorTop) pageIndicatorTop.innerText = `Para ${stats.paraNum} • Page ${stats.pageInPara} of ${stats.totalPagesInPara}`;
-
-      const pageIndicatorBottom = document.getElementById('pageIndicatorBottom');
-      if (pageIndicatorBottom) pageIndicatorBottom.innerText = `Para ${stats.paraNum} • Page ${stats.pageInPara} / ${stats.totalPagesInPara}`;
-
-      const globalPageSubLabel = document.getElementById('globalPageSubLabel');
-      if (globalPageSubLabel) globalPageSubLabel.innerText = `(Mushaf Page ${pageNum} of 604)`;
-
-      const box = document.getElementById('mushafPageContent');
-      if (box) {
-        box.innerHTML = `<div class="py-16 text-center text-xs text-slate-500">Opening Para ${stats.paraNum} — Page ${stats.pageInPara}...</div>`;
-      }
-
-      try {
-        // Fetching 'quran-uthmani' for Arabic, 'ur.jalandhry' for Urdu, and 'en.sahih' / verified Roman Urdu edition
-        const [resAr, resUr, resEn] = await Promise.all([
-          fetch(`https://api.alquran.cloud/v1/page/${pageNum}/quran-uthmani`),
-          fetch(`https://api.alquran.cloud/v1/page/${pageNum}/ur.jalandhry`),
-          fetch(`https://api.alquran.cloud/v1/page/${pageNum}/en.sahih`)
-        ]);
-        const [jAr, jUr, jEn] = await Promise.all([resAr.json(), resUr.json(), resEn.json()]);
-
-        if (jAr.code === 200) {
-          const ayahs = jAr.data.ayahs.map(a => {
-            let cleanTxt = a.text.replace(/\u0671/g, '\u0627');
-            // Strip inline Bismillah from Ayah 1 (for Surahs 2..114 except 9) so Bismillah only renders once in the top heading banner
-            if (a.numberInSurah === 1 && a.surah && a.surah.number !== 1 && a.surah.number !== 9) {
-              cleanTxt = cleanTxt.replace(/^بِسْمِ\s+اللَّهِ\s+الرَّحْمَٰنِ\s+الرَّحِيمِ\s*/u, '');
-            }
-            return { ...a, text: cleanTxt };
-          });
-
-          const firstAyah = ayahs[0];
-          const paraNum = firstAyah ? firstAyah.juz : stats.paraNum;
-          const surahName = firstAyah && firstAyah.surah ? firstAyah.surah.englishName : '';
-          const surahNum = firstAyah && firstAyah.surah ? firstAyah.surah.number : 1;
-
-          currentPageSurahNum = surahNum;
-          setupPageSurahAudio(surahNum, surahName);
-
-          const surahDrop = document.getElementById('surahDropdown');
-          if (surahDrop && surahDrop.value != surahNum) {
-            surahDrop.value = surahNum;
-          }
-
-          const pageMetaHeader = document.getElementById('pageMetaHeader');
-          if (pageMetaHeader) {
-            pageMetaHeader.innerText = `Para ${paraNum} • ${surahName}`;
-          }
-
-          currentPageData = {
-            page: pageNum,
-            para: paraNum,
-            pageInPara: stats.pageInPara,
-            totalPagesInPara: stats.totalPagesInPara,
-            surah: surahName,
-            surahNum: surahNum,
-            arabic: ayahs,
-            urdu: jUr.data.ayahs,
-            english: jEn.data.ayahs
-          };
-          renderMushafPage();
-          checkResumeBanner();
-        }
-      } catch (e) {
-        if (box) {
-          box.innerHTML = `<div class="py-12 text-center text-xs text-rose-600">Internet connection required to open Page ${pageNum}.</div>`;
-        }
-      }
-    }
-
-    function setupPageSurahAudio(surahNum, surahName) {
+    function updateTilawatSource(surahNum, surahName, autoPlay = false) {
+      currentSurahOnPage = surahNum;
       const audio = document.getElementById('surahTilawatAudio');
-      const qariSelect = document.getElementById('qariSelector');
-      if (!audio) return;
-      const baseServerUrl = qariSelect ? qariSelect.value : 'https://server11.mp3quran.net/sds/';
+      const qariKey = document.getElementById('qariSelector').value || 'sudais';
+      const qariObj = qariServerUrls[qariKey] || qariServerUrls.sudais;
       const paddedSurah = String(surahNum).padStart(3, '0');
-      audio.pause();
-      isSurahTilawatPlaying = false;
-      audio.src = `${baseServerUrl}${paddedSurah}.mp3`;
-      audio.playbackRate = tilawatSpeed;
-      const icon = document.getElementById('tilawatPlayIcon');
-      const txt = document.getElementById('tilawatBtnText');
-      if (icon) icon.innerText = '▶';
-      if (txt) txt.innerText = `Listen ${surahName || 'Surah'}`;
-      audio.onended = () => {
-        isSurahTilawatPlaying = false;
-        if (icon) icon.innerText = '▶';
-        if (txt) txt.innerText = `Listen ${surahName || 'Surah'}`;
-      };
-    }
-
-    function changeSurahQari() {
-      const wasPlaying = isSurahTilawatPlaying;
-      const sName = currentPageData ? currentPageData.surah : 'Surah';
-      setupPageSurahAudio(currentPageSurahNum, sName);
-      if (wasPlaying) {
-        toggleSurahTilawat();
+      const targetSrc = `${qariObj.base}/${paddedSurah}.mp3`;
+      if (audio.src !== targetSrc) {
+        audio.src = targetSrc;
+        audio.playbackRate = playbackSpeeds[currentSpeedIndex];
+      }
+      const lbl = document.getElementById('tilawatPlayLabel');
+      if (lbl && !isTilawatPlaying) lbl.innerText = `Listen ${surahName || 'Surah'}`;
+      if (autoPlay) {
+        audio.play().then(() => { isTilawatPlaying = true; document.getElementById('tilawatPlayIcon').innerText = '⏸'; document.getElementById('tilawatPlayLabel').innerText = `Pause (${qariObj.name})`; }).catch(() => {});
       }
     }
 
-    function cycleTilawatSpeed() {
-      const speeds = [1.0, 1.25, 1.5];
-      const nextIdx = (speeds.indexOf(tilawatSpeed) + 1) % speeds.length;
-      tilawatSpeed = speeds[nextIdx];
+    function changeQariReciter() {
+      const wasPlaying = isTilawatPlaying;
       const audio = document.getElementById('surahTilawatAudio');
-      if (audio) audio.playbackRate = tilawatSpeed;
-      const btn = document.getElementById('tilawatSpeedBtn');
-      if (btn) btn.innerText = tilawatSpeed.toFixed(tilawatSpeed === 1.25 ? 2 : 1) + 'x';
+      audio.pause(); isTilawatPlaying = false;
+      updateTilawatSource(currentSurahOnPage, document.getElementById('pageSurahBadge').innerText, wasPlaying);
     }
 
     function toggleSurahTilawat() {
       const audio = document.getElementById('surahTilawatAudio');
-      const icon = document.getElementById('tilawatPlayIcon');
-      const txt = document.getElementById('tilawatBtnText');
-      if (!audio) return;
-
-      if (isSurahTilawatPlaying) {
-        audio.pause();
-        isSurahTilawatPlaying = false;
-        if (icon) icon.innerText = '▶';
-        if (txt) txt.innerText = `Listen ${currentPageData ? currentPageData.surah : 'Surah'}`;
+      const qariKey = document.getElementById('qariSelector').value || 'sudais';
+      const qariObj = qariServerUrls[qariKey] || qariServerUrls.sudais;
+      if (isTilawatPlaying) {
+        audio.pause(); isTilawatPlaying = false;
+        document.getElementById('tilawatPlayIcon').innerText = '▶';
+        document.getElementById('tilawatPlayLabel').innerText = `Listen ${document.getElementById('pageSurahBadge').innerText}`;
       } else {
-        audio.playbackRate = tilawatSpeed;
-        audio.play().then(() => {
-          isSurahTilawatPlaying = true;
-          if (icon) icon.innerText = '⏸';
-          if (txt) txt.innerText = 'Pause Tilawat';
-        }).catch(() => {});
+        audio.playbackRate = playbackSpeeds[currentSpeedIndex];
+        audio.play().then(() => { isTilawatPlaying = true; document.getElementById('tilawatPlayIcon').innerText = '⏸'; document.getElementById('tilawatPlayLabel').innerText = `Pause (${qariObj.name})`; }).catch(() => alert("Tap screen once to allow audio."));
       }
     }
 
-    function setQuranLang(mode) {
-      quranMode = mode;
-      document.querySelectorAll('.lang-btn').forEach(b => {
-        b.className = 'lang-btn px-2.5 py-1 rounded-lg font-semibold text-slate-600 hover:text-emeraldRoyal transition';
-      });
-      const activeLang = document.getElementById(`lang-${mode}`);
-      if (activeLang) {
-        activeLang.className = 'lang-btn px-2.5 py-1 rounded-lg font-bold bg-emeraldRoyal text-gold-300 transition';
-      }
-      renderMushafPage();
+    function cyclePlaybackSpeed() {
+      currentSpeedIndex = (currentSpeedIndex + 1) % playbackSpeeds.length;
+      const spd = playbackSpeeds[currentSpeedIndex];
+      document.getElementById('surahTilawatAudio').playbackRate = spd;
+      document.getElementById('speedToggleBtn').innerText = `${spd.toFixed(spd % 1 === 0 ? 1 : 2)}x`;
     }
 
-    function adjustArabicSize(delta) {
-      arabicFontSize = Math.min(44, Math.max(20, arabicFontSize + delta));
-      localStorage.setItem('sa_quran_font_size', arabicFontSize);
-      renderMushafPage();
-    }
-
-    // Verified Natural Roman Urdu & Clean Meaning Formatter (Zero Spelling Mistakes)
-    const verifiedSurahRomanMap = {
-      "1:1": "Shuru Allah ke naam se jo bada meherban nihayat rehem wala hai.",
-      "1:2": "Tamam tareefein Allah hi ke liye hain jo saare jahanon ka paalne wala hai.",
-      "1:3": "Bada meherban nihayat rehem wala.",
-      "1:4": "Insaaf (Qayamat) ke din ka maalik.",
-      "1:5": "Aye Allah! Hum teri hi ibadat karte hain aur tujh hi se madad maangte hain.",
-      "1:6": "Humein seedhe raaste par chala.",
-      "1:7": "Un logon ke raaste par jin par tune inaam kiya, na unke jin par ghussa hua aur na gumrahon ke.",
-      "2:1": "Alif Laam Meem.",
-      "2:2": "Yeh woh kitaab (Quran) hai jisme koi shak nahi, parhezgaron ke liye hidayat hai.",
-      "2:3": "Jo log ghaib par iman laate hain, namaz qayam karte hain aur jo kuch humne unhe diya hai usme se kharch karte hain.",
-      "2:4": "Aur jo iman laate hain us par jo aap par nazil kiya gaya aur jo aap se pehle nazil kiya gaya, aur woh aakhirat par yaqeen rakhte hain.",
-      "2:5": "Yahi log apne Rab ki taraf se hidayat par hain aur yahi log kamyab hone wale hain.",
-      "2:255": "Allah ke siwa koi mabood nahi, woh zinda hai aur sabko thaamne wala hai. Use na ungh aati hai aur na neend. Aasmanon aur zameen mein jo kuch hai sab usi ka hai. Kaun hai jo uski ijazat ke baghair uske paas sifarish kar sake? Woh jaanta hai jo unke saamne hai aur jo unke peeche hai, aur woh uske ilm mein se kisi cheez ka ihata nahi kar sakte magar jitna woh chahe. Uski Kursi ne aasmanon aur zameen ko gher rakha hai aur un dono ki hifazat use thakati nahi, aur woh bahut buland aur azmat wala hai.",
-      "112:1": "Kaho: Woh Allah ek hai.",
-      "112:2": "Allah be-niyaz hai (sab uske mohtaj hain, woh kisi ka mohtaj nahi).",
-      "112:3": "Na uski koi aulaad hai aur na woh kisi se paida hua.",
-      "112:4": "Aur uske barabar ka koi nahi hai.",
-      "113:1": "Kaho: Main subah ke Rab ki panah maangta hoon.",
-      "113:2": "Har us cheez ke shar (buraai) se jo usne paida ki.",
-      "113:3": "Aur andheri raat ke shar se jab woh chha jaye.",
-      "113:4": "Aur girahon mein phoonkne walon (jadoogaron) ke shar se.",
-      "113:5": "Aur hasad karne wale ke shar se jab woh hasad kare.",
-      "114:1": "Kaho: Main logon ke Rab ki panah maangta hoon.",
-      "114:2": "Logon ke Badshah ki.",
-      "114:3": "Logon ke Mabood ki.",
-      "114:4": "Waswasa daalne wale (Shaitan) ke shar se jo Allah ke zikr se peeche hat jaata hai.",
-      "114:5": "Jo logon ke seenon mein waswase daalta hai.",
-      "114:6": "Khwaah woh jinnat mein se ho ya insanon mein se."
-    };
-
-    function getCleanRomanUrdu(ayah, idx) {
-      const key = `${ayah.surah ? ayah.surah.number : currentPageSurahNum}:${ayah.numberInSurah}`;
-      if (verifiedSurahRomanMap[key]) {
-        return verifiedSurahRomanMap[key];
-      }
-
-      // Clean, natural Hindustani / Roman Urdu phrasing derived from verified Sahih translation
-      const eng = currentPageData && currentPageData.english && currentPageData.english[idx]
-        ? currentPageData.english[idx].text
-        : '';
-
-      if (!eng) return '';
-
-      return eng
-        .replace(/Indeed, Allah is/gi, "Beshak Allah")
-        .replace(/Indeed, We have/gi, "Beshak Humne")
-        .replace(/Indeed, those who believe and do righteous deeds/gi, "Beshak jo log iman laaye aur nek amal kiye")
-        .replace(/those who believe/gi, "jo log iman laaye")
-        .replace(/those who disbelieve/gi, "jo log inkar karte hain")
-        .replace(/O you who have believed,/gi, "Aye iman walon!")
-        .replace(/O mankind,/gi, "Aye logon!")
-        .replace(/And establish prayer and give zakah/gi, "Aur namaz qayam karo aur zakat ada karo")
-        .replace(/the Day of Resurrection/gi, "Qayamat ke din")
-        .replace(/the heavens and the earth/gi, "aasmanon aur zameen")
-        .replace(/Forgiving and Merciful/gi, "bakhshne wala aur meherban")
-        .replace(/All-Knowing, All-Wise/gi, "sab kuch jaanne wala aur hikmat wala")
-        .replace(/Gardens beneath which rivers flow/gi, "Jannat ke baghat jinke neeche nehrein behti hain")
-        .replace(/\(O Muhammad\)/gi, "(Aye Nabi ﷺ)")
-        .replace(/\[All\] praise is \[due\] to Allah, Lord of the worlds/gi, "Tamam tareefein Allah ke liye hain jo saare jahanon ka Rab hai")
-        .replace(/the Entirely Merciful, the Especially Merciful/gi, "bada meherban nihayat rehem wala")
-        .replace(/Allah/g, "Allah")
-        .replace(/Lord/g, "Rab")
-        .replace(/Messenger/g, "Rasool")
-        .replace(/angels/gi, "farishte")
-        .replace(/paradise/gi, "Jannat")
-        .replace(/Hellfire/gi, "Jahannam")
-        .replace(/prayer/gi, "namaz")
-        .replace(/charity/gi, "sadqa")
-        .replace(/righteousness/gi, "neki")
-        .replace(/sin/gi, "gunah")
-        .replace(/forgiveness/gi, "maghfirat")
-        .replace(/punishment/gi, "azaab")
-        .replace(/reward/gi, "ajr (sawab)")
-        .replace(/guidance/gi, "hidayat")
-        .replace(/Hereafter/gi, "Aakhirat");
-    }
-
-    function renderMushafPage() {
-      if (!currentPageData) return;
-      const box = document.getElementById('mushafPageContent');
-      if (!box) return;
-
-      if (quranMode === 'arabic') {
-        let pageContentHtml = '';
-        currentPageData.arabic.forEach(ayah => {
-          if (ayah.numberInSurah === 1 && ayah.surah) {
-            pageContentHtml += `
-              <div class="my-4 py-3 px-4 rounded-2xl bg-cream border border-gold-400 text-center">
-                <p class="font-quran text-2xl sm:text-3xl font-bold text-emeraldRoyal">${ayah.surah.name.replace(/\u0671/g, '\u0627')}</p>
-                ${ayah.surah.number !== 1 && ayah.surah.number !== 9 ? '<p class="font-quran text-2xl font-bold text-gold-600 mt-1.5">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>' : ''}
-              </div>
-            `;
-          }
-          pageContentHtml += `<span class="font-bold">${ayah.text}</span><span class="ayah-end-badge font-bold">﴿${ayah.numberInSurah}﴾</span> `;
-        });
-
-        box.innerHTML = `
-          <div class="font-quran font-bold text-right text-emeraldRoyal leading-[2.6] tracking-normal" dir="rtl" style="font-size: ${arabicFontSize}px;">
-            ${pageContentHtml}
-          </div>
-        `;
-      } else {
-        let listHtml = '<div class="space-y-4">';
-        currentPageData.arabic.forEach((ayah, idx) => {
-          if (ayah.numberInSurah === 1 && ayah.surah) {
-            listHtml += `
-              <div class="py-2.5 px-4 rounded-2xl bg-cream border border-gold-400 text-center">
-                <p class="font-quran text-2xl font-bold text-emeraldRoyal">${ayah.surah.name.replace(/\u0671/g, '\u0627')}</p>
-                ${ayah.surah.number !== 1 && ayah.surah.number !== 9 ? '<p class="font-quran text-xl font-bold text-gold-600 mt-1">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>' : ''}
-              </div>
-            `;
-          }
-          const trans = quranMode === 'urdu'
-            ? `<p class="font-urdu text-sm sm:text-base text-slate-700 text-right leading-loose pt-2 border-t border-gold-400/20" dir="rtl">${currentPageData.urdu[idx].text}</p>`
-            : `<p class="font-sans text-xs sm:text-sm text-slate-700 leading-relaxed pt-2 border-t border-gold-400/20">${getCleanRomanUrdu(ayah, idx)}</p>`;
-
-          listHtml += `
-            <div class="p-3.5 rounded-2xl bg-white/85 border border-gold-400/30 space-y-2">
-              <div class="text-[10px] font-bold text-gold-600">Ayah ${ayah.numberInSurah}</div>
-              <p class="font-quran font-bold text-right text-emeraldRoyal leading-[2.3]" dir="rtl" style="font-size: ${arabicFontSize}px;">
-                ${ayah.text} <span class="ayah-end-badge font-bold">﴿${ayah.numberInSurah}﴾</span>
-              </p>
-              ${trans}
-            </div>
-          `;
-        });
-        listHtml += '</div>';
-        box.innerHTML = listHtml;
-      }
-    }
-
-    // Bookmarks & Auto-Resume
-    function getSavedBookmarks() {
-      return JSON.parse(localStorage.getItem('sa_quran_page_bookmarks') || '[]');
-    }
-
-    function bookmarkCurrentPage() {
-      if (!currentPageData) return;
-      const list = getSavedBookmarks();
-      if (!list.some(b => b.page === currentPageData.page)) {
-        list.unshift({
-          page: currentPageData.page,
-          para: currentPageData.para,
-          surah: currentPageData.surah
-        });
-        localStorage.setItem('sa_quran_page_bookmarks', JSON.stringify(list));
-        updateBookmarkBadge();
-        renderBookmarksList();
-      }
-      const btn = document.getElementById('bookmarkPageBtn');
-      if (btn) {
-        btn.innerHTML = `<span>✅</span> <span class="hidden sm:inline">Saved Page</span> <span id="btnPageNumLabel">${currentPageData.page}</span>`;
-        setTimeout(() => {
-          btn.innerHTML = `<span>🔖</span> <span class="hidden sm:inline">Save Page</span> <span id="btnPageNumLabel">${currentPageData.page}</span>`;
-        }, 1600);
-      }
-    }
-
-    function toggleBookmarksDrawer() {
-      const drawer = document.getElementById('bookmarksDrawer');
-      drawer.classList.toggle('hidden');
-      renderBookmarksList();
-    }
-
-    function renderBookmarksList() {
-      const list = getSavedBookmarks();
-      const box = document.getElementById('bookmarksList');
-      if (list.length === 0) {
-        box.innerHTML = `<p class="text-xs text-slate-400">No saved pages yet. Tap "Save Page" while reading.</p>`;
-        return;
-      }
-      box.innerHTML = list.map((b, i) => `
-        <div class="p-2.5 rounded-xl bg-pearl border border-gold-400/40 flex items-center justify-between text-xs">
-          <button onclick="openBookmarkedPage(${b.page})" class="text-left font-bold text-emeraldRoyal hover:underline">
-            🔖 Page ${b.page} (Para ${b.para} • ${b.surah})
-          </button>
-          <button onclick="removeBookmark(${i})" class="text-rose-500 hover:text-rose-700 px-1.5 font-bold">✕</button>
-        </div>
-      `).join('');
-    }
-
-    function openBookmarkedPage(page) {
-      document.getElementById('bookmarksDrawer').classList.add('hidden');
-      loadQuranPage(page);
-    }
-
-    function removeBookmark(index) {
-      const list = getSavedBookmarks();
-      list.splice(index, 1);
-      localStorage.setItem('sa_quran_page_bookmarks', JSON.stringify(list));
-      updateBookmarkBadge();
-      renderBookmarksList();
-    }
-
-    function updateBookmarkBadge() {
-      const countEl = document.getElementById('bookmarkCount');
-      if (countEl) countEl.innerText = getSavedBookmarks().length;
-    }
-
-    function checkResumeBanner() {
-      const lastPage = parseInt(localStorage.getItem('sa_last_page') || '0');
-      if (lastPage > 0) {
-        document.getElementById('resumeReadingBanner').classList.remove('hidden');
-        const stats = getParaPageStats(lastPage);
-        document.getElementById('resumeLabelText').innerText = `Para ${stats.paraNum} • Page ${stats.pageInPara} of ${stats.totalPagesInPara}`;
-      }
-    }
-
-    function resumeLastRead() {
-      const lastPage = parseInt(localStorage.getItem('sa_last_page') || '1');
-      showSection('quran');
-      loadQuranPage(lastPage);
-    }
-
-    // =========================================================================
-    // ROYAL TASBEEH PRO
-    // =========================================================================
-    let tCount = parseInt(localStorage.getItem('sa_t_count_pro') || '0');
-    let tLaps = parseInt(localStorage.getItem('sa_t_laps_pro') || '0');
-    let tTarget = parseInt(localStorage.getItem('sa_t_target_pro') || '33');
-
-    const dhikrMap = {
-      'SubhanAllah': { ar: 'سُبْحَانَ اللَّهِ', mean: 'Allah Ta\'ala har aib aur kami se paak hai' },
-      'Alhamdulillah': { ar: 'الْحَمْدُ لِلَّهِ', mean: 'Tamam tareefein Allah ke liye hain' },
-      'AllahuAkbar': { ar: 'اللَّهُ أَكْبَرُ', mean: 'Allah sabse bada hai' },
-      'Astaghfirullah': { ar: 'أَسْتَغْفِرُ اللَّهَ', mean: 'Main Allah se apne gunahon ki maafi maangta hoon' },
-      'Durood': { ar: 'اللَّهُمَّ صَلِّ عَلَىٰ مُحَمَّدٍ', mean: 'Aye Allah! Hazrat Muhammad ﷺ par rehmat nazil farma' },
-      'Kalimah': { ar: 'لَا إِلٰهَ إِلَّا اللَّهُ', mean: 'Allah ke siwa koi mabood nahi' }
-    };
-
-    function playClickTick() {
+    async function initSurahDropdown() {
       try {
-        const AudioCtx = window.AudioContext || window.webkitAudioContext;
-        const ctx = new AudioCtx();
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-        osc.type = 'triangle';
-        osc.frequency.setValueAtTime(580, ctx.currentTime);
-        gain.gain.setValueAtTime(0.06, ctx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.04);
-        osc.connect(gain);
-        gain.connect(ctx.destination);
-        osc.start();
-        osc.stop(ctx.currentTime + 0.04);
+        const res = await fetch('https://api.alquran.cloud/v1/surah');
+        const json = await res.json();
+        if (json.code === 200) {
+          document.getElementById('surahDropdown').innerHTML = json.data.map(s => `<option value="${s.number}">${s.number}. ${s.englishName} (${s.name})</option>`).join('');
+        }
       } catch (e) {}
     }
 
-    function setTasbeehTarget(num) {
-      tTarget = num;
-      localStorage.setItem('sa_t_target_pro', num);
-      document.getElementById('tasbeehTargetLabel').innerText = num === 0 ? '∞' : num;
-      [33, 99, 100, 0].forEach(val => {
-        const b = document.getElementById(`tBtn-${val}`);
-        if (b) {
-          b.className = val === num
-            ? 'px-2.5 py-1 rounded-lg border border-gold-400 bg-emeraldRoyal text-gold-300'
-            : 'px-2.5 py-1 rounded-lg border border-gold-400 bg-pearl text-emeraldRoyal';
-        }
-      });
+    async function jumpToSurah(surahNum) {
+      if (!surahNum) return;
+      try {
+        const res = await fetch(`https://api.alquran.cloud/v1/ayah/${surahNum}:1`);
+        const json = await res.json();
+        if (json.code === 200) loadQuranPage(json.data.page);
+      } catch (e) {}
     }
 
+    function jumpToPara(pageNum) { if (pageNum) loadQuranPage(parseInt(pageNum)); }
+
+    async function loadQuranPage(pageNum) {
+      if (isNaN(pageNum) || pageNum < 1) pageNum = 1;
+      if (pageNum > 604) pageNum = 604;
+      currentPage = pageNum;
+      localStorage.setItem('sa_last_quran_page', currentPage);
+
+      const paraStats = getParaPageStats(currentPage);
+      document.getElementById('pageIndicatorHeader').innerText = `Page ${paraStats.pageInPara} of ${paraStats.totalPagesInPara}`;
+      document.getElementById('pageIndicatorFooter').innerText = `/ ${paraStats.totalPagesInPara} (Para ${paraStats.paraNumber})`;
+      document.getElementById('pageJumpInput').value = currentPage;
+      document.getElementById('prevPageBtn').disabled = (currentPage <= 1);
+      document.getElementById('nextPageBtn').disabled = (currentPage >= 604);
+      document.getElementById('btnPageNumLabel').innerText = currentPage;
+
+      const contentBox = document.getElementById('mushafPageContent');
+      if (pageCache[currentPage]) { renderMushafPage(pageCache[currentPage]); return; }
+
+      contentBox.innerHTML = `<div class="text-center py-20 text-xs text-slate-500">Loading Page ${paraStats.pageInPara} of Para ${paraStats.paraNumber}...</div>`;
+
+      try {
+        const [resAr, resUr, resRo] = await Promise.all([
+          fetch(`https://api.alquran.cloud/v1/page/${currentPage}/quran-uthmani`),
+          fetch(`https://api.alquran.cloud/v1/page/${currentPage}/ur.jalandhry`),
+          fetch(`https://api.alquran.cloud/v1/page/${currentPage}/en.sahih`)
+        ]);
+        const [jAr, jUr, jRo] = await Promise.all([resAr.json(), resUr.json(), resRo.json()]);
+        if (jAr.code === 200) {
+          pageCache[currentPage] = { arabic: jAr.data.ayahs, urdu: jUr.data.ayahs, roman: jRo.data.ayahs };
+          renderMushafPage(pageCache[currentPage]);
+        }
+      } catch (e) {
+        contentBox.innerHTML = `<div class="text-center py-16 text-xs text-rose-600">Internet connection required to load page.</div>`;
+      }
+    }
+
+    function toNaturalRomanUrdu(enText, surahNum, ayahNum) {
+      const exactDict = {
+        "1:1": "Allah ke naam se shuru jo nihayat meherban, hamesha reham farmane wala hai.",
+        "1:2": "Tamam tareefein Allah hi ke liye hain jo saare jahanon ka Rab hai.",
+        "1:3": "Jo nihayat meherban, hamesha reham farmane wala hai.",
+        "1:4": "Jo roz-e-jaza (Qayamat ke din) ka malik hai.",
+        "1:5": "Aye Allah! Hum sirf teri hi ibadat karte hain aur sirf tujhi se madad maangte hain.",
+        "1:6": "Humein seedhe raaste par chala.",
+        "1:7": "Un logon ke raaste par jin par tune inaam farmaya, na ke unke jin par tera ghazab hua aur na hi gumrahon ke.",
+        "2:1": "Alif Laam Meem.",
+        "2:2": "Yeh wo Azeem Kitab (Quran) hai jisme kisi shak ki koi gunjaish nahi, yeh muttaqi (parhezgar) logon ke liye hidayat hai.",
+        "2:3": "Jo ghaib par iman laate hain, namaz qayem karte hain, aur jo kuch humne unhe diya hai usme se Allah ki raah me kharch karte hain.",
+        "2:4": "Aur jo iman laate hain us par jo aap ﷺ par nazil kiya gaya aur jo aapse pehle nazil kiya gaya, aur wo akhirat par bhi mukammal yaqeen rakhte hain.",
+        "2:5": "Yahi log apne Rab ki taraf se seedhi hidayat par hain, aur yahi log kamiyab hone wale hain."
+      };
+      const key = `${surahNum}:${ayahNum}`;
+      if (exactDict[key]) return exactDict[key];
+      return enText.replace(/\bIndeed,\s*/gi, "Beshak ").replace(/\bAnd\s+/gi, "Aur ").replace(/\bO you who have believed,/gi, "Aye iman walon!").replace(/\bAllah\b/g, "Allah Ta'ala").replace(/\bLord\b/g, "Rab").replace(/\bMessenger\b/g, "Rasool ﷺ").replace(/\bprayer\b/gi, "namaz").replace(/\bcharity\b/gi, "zakat aur sadqa").replace(/\bHereafter\b/gi, "Akhirat").replace(/\bParadise\b/gi, "Jannat").replace(/\bHellfire\b/gi, "Jahannam").replace(/\bmerciful\b/gi, "reham farmane wala").replace(/\bforgiving\b/gi, "bakhshne wala");
+    }
+
+    function renderMushafPage(data) {
+      const box = document.getElementById('mushafPageContent');
+      const firstAyah = data.arabic[0];
+      const paraStats = getParaPageStats(currentPage);
+      document.getElementById('pageParaBadge').innerText = `Para ${paraStats.paraNumber}`;
+      document.getElementById('pageSurahBadge').innerText = firstAyah.surah.englishName;
+      document.getElementById('surahDropdown').value = firstAyah.surah.number;
+      document.getElementById('paraDropdown').value = paraStartPages[paraStats.paraNumber - 1];
+      updateTilawatSource(firstAyah.surah.number, firstAyah.surah.englishName, false);
+
+      let html = '';
+      if (quranMode === 'arabic') {
+        html += `<div class="text-justify mushaf-text text-emeraldRoyal" style="font-size: ${arabicFontSize}px;" dir="rtl">`;
+        data.arabic.forEach(ayah => {
+          if (ayah.numberInSurah === 1) {
+            html += `<div class="my-4 py-3 px-4 rounded-2xl bg-emeraldRoyal text-center border border-gold-400 shadow-sm"><p class="font-arabic text-2xl sm:text-3xl text-gold-300 font-bold">${ayah.surah.name}</p>${ayah.surah.number !== 1 && ayah.surah.number !== 9 ? `<p class="font-arabic text-xl sm:text-2xl text-white mt-1 font-bold">بِسْمِ ٱللَّٰهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</p>` : ''}</div>`;
+          }
+          const cleanArabic = stripInlineBismillah(ayah.text, ayah.surah.number, ayah.numberInSurah);
+          if (cleanArabic) html += `<span>${cleanArabic}</span><span class="ayah-badge">${toArabicDigits(ayah.numberInSurah)}</span> `;
+        });
+        html += `</div>`;
+      } else {
+        html += `<div class="space-y-4">`;
+        data.arabic.forEach((ayah, idx) => {
+          if (ayah.numberInSurah === 1) {
+            html += `<div class="py-3 px-4 rounded-2xl bg-emeraldRoyal text-center border border-gold-400 shadow-sm"><p class="font-arabic text-2xl sm:text-3xl text-gold-300 font-bold">${ayah.surah.name}</p>${ayah.surah.number !== 1 && ayah.surah.number !== 9 ? `<p class="font-arabic text-xl sm:text-2xl text-white mt-1 font-bold">بِسْمِ ٱللَّٰهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</p>` : ''}</div>`;
+          }
+          const cleanArabic = stripInlineBismillah(ayah.text, ayah.surah.number, ayah.numberInSurah);
+          let transHtml = '';
+          if (quranMode === 'urdu' && data.urdu[idx]) {
+            transHtml = `<p class="font-urdu text-sm sm:text-base text-slate-700 text-right leading-loose pt-2.5 border-t border-gold-400/20" dir="rtl">${data.urdu[idx].text}</p>`;
+          } else if (quranMode === 'roman' && data.roman[idx]) {
+            transHtml = `<p class="text-xs sm:text-sm text-slate-700 leading-relaxed pt-2.5 border-t border-gold-400/20 font-medium">${toNaturalRomanUrdu(data.roman[idx].text, ayah.surah.number, ayah.numberInSurah)}</p>`;
+          }
+          html += `<div class="p-4 rounded-2xl bg-white border border-gold-400/35 shadow-sm space-y-2.5"><div class="flex items-center justify-between text-[10px] text-slate-400 font-bold"><span class="px-2 py-0.5 rounded-full bg-pearl text-emeraldRoyal border border-gold-400/40">${ayah.surah.englishName} • Ayah ${ayah.numberInSurah}</span><span>Para ${paraStats.paraNumber}</span></div><p class="mushaf-text text-right text-emeraldRoyal" style="font-size: ${arabicFontSize}px;" dir="rtl">${cleanArabic} <span class="ayah-badge">${toArabicDigits(ayah.numberInSurah)}</span></p>${transHtml}</div>`;
+        });
+        html += `</div>`;
+      }
+      box.innerHTML = html;
+    }
+
+    function prevQuranPage() { if (currentPage > 1) loadQuranPage(currentPage - 1); }
+    function nextQuranPage() { if (currentPage < 604) loadQuranPage(currentPage + 1); }
+
+    function setQuranMode(mode) {
+      quranMode = mode;
+      document.querySelectorAll('.qmode-btn').forEach(b => b.className = 'qmode-btn py-1.5 rounded-lg font-semibold text-slate-600 hover:text-emeraldRoyal transition');
+      document.getElementById(`mode-${mode}`).className = 'qmode-btn py-1.5 rounded-lg font-bold bg-emeraldRoyal text-gold-300 transition';
+      if (pageCache[currentPage]) renderMushafPage(pageCache[currentPage]);
+    }
+
+    function changeArabicFontSize(delta) {
+      arabicFontSize = Math.min(44, Math.max(20, arabicFontSize + delta));
+      localStorage.setItem('sa_arabic_font_size', arabicFontSize);
+      if (pageCache[currentPage]) renderMushafPage(pageCache[currentPage]);
+    }
+
+    function bookmarkCurrentPage() {
+      const surahName = document.getElementById('pageSurahBadge').innerText;
+      const paraStats = getParaPageStats(currentPage);
+      const existingIdx = savedBookmarks.findIndex(b => b.page === currentPage);
+      if (existingIdx > -1) savedBookmarks.splice(existingIdx, 1);
+      else savedBookmarks.unshift({ page: currentPage, label: `Para ${paraStats.paraNumber} • ${surahName} (P.${paraStats.pageInPara})` });
+      localStorage.setItem('sa_quran_bookmarks', JSON.stringify(savedBookmarks));
+      renderBookmarks();
+    }
+
+    function toggleBookmarksDrawer() { document.getElementById('bookmarksDrawer').classList.toggle('hidden'); }
+    function renderBookmarks() {
+      document.getElementById('savedBookmarkCount').innerText = savedBookmarks.length;
+      const list = document.getElementById('savedBookmarksList');
+      if (savedBookmarks.length === 0) { list.innerHTML = `<span class="text-xs text-slate-400">No bookmarks saved yet.</span>`; return; }
+      list.innerHTML = savedBookmarks.map(b => `<button onclick="loadQuranPage(${b.page})" class="px-3 py-1 rounded-full bg-pearl border border-gold-400 text-xs font-bold text-emeraldRoyal">${b.label}</button>`).join('');
+    }
+
+    // Tasbeeh Pro
+    let tCount = 0, tLaps = 0, tLimit = 33;
+    const dhikrMap = { 'SubhanAllah': 'سُبْحَانَ اللَّهِ', 'Alhamdulillah': 'الْحَمْدُ لِلَّهِ', 'AllahuAkbar': 'اللَّهُ أَكْبَرُ', 'Astaghfirullah': 'أَسْتَغْفِرُ اللَّهَ', 'Durood': 'اللَّهُمَّ صَلِّ عَلَىٰ مُحَمَّدٍ', 'Kalimah': 'لَا إِلٰهَ إِلَّا اللَّهُ' };
     function updateDhikrDisplay() {
       const val = document.getElementById('dhikrPicker').value;
-      const customBox = document.getElementById('customDhikrBox');
-      if (val === 'Custom') {
-        customBox.classList.remove('hidden');
-        applyCustomDhikr();
-      } else {
-        customBox.classList.add('hidden');
-        document.getElementById('dhikrArText').innerText = dhikrMap[val].ar;
-        document.getElementById('dhikrMeanText').innerText = dhikrMap[val].mean;
-      }
+      const box = document.getElementById('customDhikrBox');
+      if (val === 'Custom') { box.classList.remove('hidden'); updateCustomDhikrText(); }
+      else { box.classList.add('hidden'); document.getElementById('dhikrArText').innerText = dhikrMap[val]; }
     }
-
-    function applyCustomDhikr() {
-      const txt = document.getElementById('customDhikrText').value.trim() || 'ذِكْرُ اللَّهِ';
-      document.getElementById('dhikrArText').innerText = txt;
-      document.getElementById('dhikrMeanText').innerText = 'Personal Wazifa / Custom Dhikr';
+    function updateCustomDhikrText() { document.getElementById('dhikrArText').innerText = document.getElementById('customDhikrBox').value.trim() || 'ذِكْرُ اللَّهِ'; }
+    function setTasbeehLimit(lim) {
+      tLimit = lim;
+      document.getElementById('tasbeehTargetLbl').innerText = lim === 0 ? '∞' : lim;
+      [33, 99, 100, 0].forEach(n => document.getElementById(`lim-${n}`).className = n === lim ? 'px-2.5 py-1 rounded-lg border border-gold-400 bg-emeraldRoyal text-gold-300' : 'px-2.5 py-1 rounded-lg border border-gold-400 bg-white text-slate-700');
     }
-
     function countTasbeeh() {
       tCount++;
-      playClickTick();
-      if (tTarget > 0 && tCount >= tTarget) {
-        tCount = 0;
-        tLaps++;
-      }
+      if (tLimit > 0 && tCount >= tLimit) { tCount = 0; tLaps++; }
       document.getElementById('tasbeehVal').innerText = tCount;
       document.getElementById('tasbeehLaps').innerText = tLaps;
-      localStorage.setItem('sa_t_count_pro', tCount);
-      localStorage.setItem('sa_t_laps_pro', tLaps);
       if (navigator.vibrate) navigator.vibrate(30);
     }
+    function resetTasbeeh() { tCount = 0; tLaps = 0; document.getElementById('tasbeehVal').innerText = 0; document.getElementById('tasbeehLaps').innerText = 0; }
 
-    function resetTasbeeh() {
-      tCount = 0;
-      tLaps = 0;
-      document.getElementById('tasbeehVal').innerText = 0;
-      document.getElementById('tasbeehLaps').innerText = 0;
-      localStorage.setItem('sa_t_count_pro', 0);
-      localStorage.setItem('sa_t_laps_pro', 0);
-    }
-
-    // =========================================================================
-    // SUNNAH CHECKLIST, MASNOON DUAS, SAHIH HADITHS & RAMADAN SCHEDULE
-    // =========================================================================
-    const sunnahs = [
-      "Tahajjud Prayer (Salat al-Layl)",
-      "Sunnat-e-Miswak before Wuzu",
-      "Surah Yaseen Tilawat after Fajr",
-      "Ishraq & Chasht Nawafil",
-      "100x Durood-e-Pak Daily",
-      "Salat al-Awwabeen after Maghrib",
-      "Surah Al-Mulk before Sleeping",
-      "Surah Al-Kahf on Jummah Mubarak"
-    ];
+    // Sunnah Checklist
+    const sunnahs = ["Tahajjud Prayer (Salat al-Layl)", "Sunnat-e-Miswak before Wuzu", "Surah Yaseen after Fajr", "Ishraq & Chasht Nawafil", "100x Durood-e-Pak Daily", "Surah Al-Mulk before Sleeping"];
     function renderSunnahs() {
       const saved = JSON.parse(localStorage.getItem('sa_sunnah_clean') || '{}');
       let done = 0;
       document.getElementById('sunnahList').innerHTML = sunnahs.map((s, i) => {
         if (saved[i]) done++;
-        return `
-          <label class="p-3.5 rounded-2xl bg-pearl gold-border flex items-center gap-3 cursor-pointer">
-            <input type="checkbox" ${saved[i] ? 'checked' : ''} onchange="toggleSunnah(${i})" class="w-4 h-4 rounded text-emeraldRoyal">
-            <span class="text-xs font-semibold ${saved[i] ? 'line-through text-slate-400' : 'text-emeraldRoyal'}">${s}</span>
-          </label>
-        `;
+        return `<label class="p-3.5 rounded-2xl bg-pearl gold-border flex items-center gap-3 cursor-pointer"><input type="checkbox" ${saved[i] ? 'checked' : ''} onchange="toggleSunnah(${i})" class="w-4 h-4 rounded text-emeraldRoyal"><span class="text-xs font-semibold ${saved[i] ? 'line-through text-slate-400' : 'text-emeraldRoyal'}">${s}</span></label>`;
       }).join('');
       document.getElementById('sunnahScore').innerText = `${Math.round((done / sunnahs.length) * 100)}% Completed`;
     }
@@ -1352,94 +868,31 @@
       renderSunnahs();
     }
 
-    const masnoonDuasList = [
-      { title: "Sone Ki Dua (Before Sleeping)", ar: "اللَّهُمَّ بِاسْمِكَ أَمُوتُ وَأَحْيَا", mean: "Aye Allah! Tere hi naam ke sath main marta hoon aur jeeta hoon. (Sahih Bukhari 6324)" },
-      { title: "Subah Uthne Ki Dua (Waking Up)", ar: "الْحَمْدُ لِلَّهِ الَّذِي أَحْيَانَا بَعْدَ مَا أَمَاتَنَا وَإِلَيْهِ النُّشُورُ", mean: "Tamam tareefein Allah ke liye hain jisne hamein neend ke baad zindagi di. (Sahih Bukhari 6312)" },
-      { title: "Ghar Se Nikalne Ki Dua", ar: "بِسْمِ اللَّهِ تَوَكَّلْتُ عَلَى اللَّهِ وَلَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللَّهِ", mean: "Allah ke naam ke sath, maine Allah par bharosa kiya. (Abu Dawud & Tirmidhi)" },
-      { title: "Sayyid al-Istighfar (Maghfirat Ki Dua)", ar: "اللَّهُمَّ أَنْتَ رَبِّي لَا إِلٰهَ إِلَّا أَنْتَ خَلَقْتَنِي وَأَنَا عَبْدُكَ", mean: "Aye Allah! Tu hi mera Rab hai, tere siwa koi mabood nahi, tune hi mujhe paida kiya. (Sahih Bukhari 6306)" }
-    ];
-
-    function renderMasnoonDuas() {
-      const grid = document.getElementById('duasGrid');
-      if (!grid) return;
-      grid.innerHTML = masnoonDuasList.map(d => `
-        <div class="p-4 rounded-2xl bg-pearl gold-border space-y-2">
-          <p class="text-xs font-bold text-gold-600">${d.title}</p>
-          <p class="font-quran text-xl text-right text-emeraldRoyal leading-loose" dir="rtl">${d.ar}</p>
-          <p class="text-xs text-slate-600">${d.mean}</p>
-        </div>
-      `).join('');
-    }
-
-    const sahihHadithsList = [
-      { title: "Aamaal Ka Daromadar Niyyat Par Hai", ar: "إِنَّمَا الأَعْمَالُ بِالنِّيَّاتِ، وَإِنَّمَا لِكُلِّ امْرِئٍ مَا نَوَى", mean: "Tamam aamaal ka daromadar sirf niyyaton par hai, aur har shakhs ko wahi milega jiski usne niyat ki. (Sahih Bukhari 1)" },
-      { title: "Sachhe Musalman Ki Shanakht", ar: "الْمُسْلِمُ مَنْ سَلِمَ الْمُسْلِمُونَ مِنْ لِسَانِهِ وَيَدِهِ", mean: "Sachha Musalman wo hai jiski zaban aur haath se doosre Musalman mehfooz rahein. (Sahih Bukhari 10)" },
-      { title: "Ramadan Ke Roze Aur Maghfirat", ar: "مَنْ صَامَ رَمَضَانَ إِيمَانًا وَاحْتِسَابًا غُفِرَ لَهُ مَا تَقَدَّمَ مِنْ ذَنْبِهِ", mean: "Jisne Ramadan ke roze iman aur sawab ki ummid ke sath rakhe, uske pichhle gunah maaf kar diye jate hain. (Sahih Bukhari 38)" },
-      { title: "Rizq Aur Umr Me Barkat Ka Nuskha", ar: "مَنْ أَحَبَّ أَنْ يُبْسَطَ لَهُ فِي رِزْقِهِ، وَيُنْسَأَ لَهُ فِي أَثَرِهِ، فَلْيَصِلْ رَحِمَهُ", mean: "Jo shakhs chahe ki uske rizq me barkat ho aur umr daraz ho, to wo rishte-nate jode rakhe. (Sahih Bukhari 2067)" }
-    ];
-
-    function renderSahihHadiths() {
-      const grid = document.getElementById('hadithsGrid');
-      if (!grid) return;
-      grid.innerHTML = sahihHadithsList.map(h => `
-        <div class="p-4 rounded-2xl bg-pearl gold-border space-y-2">
-          <p class="text-xs font-bold text-gold-600">${h.title}</p>
-          <p class="font-quran text-xl text-right text-emeraldRoyal leading-loose" dir="rtl">${h.ar}</p>
-          <p class="text-xs text-slate-600">${h.mean}</p>
-        </div>
-      `).join('');
-    }
-
-    function renderRamadanSchedule(fajr = '05:15', maghrib = '18:45') {
-      const tbody = document.getElementById('ramadanTableBody');
-      if (!tbody) return;
-      let html = '';
-      for (let d = 1; d <= 30; d++) {
-        html += `
-          <tr class="hover:bg-pearl">
-            <td class="p-2.5 font-bold text-emeraldRoyal">Roza ${d}</td>
-            <td class="p-2.5 text-slate-600">${d} Ramadan 1448 AH</td>
-            <td class="p-2.5 font-mono font-bold text-emeraldRoyal">${fajr}</td>
-            <td class="p-2.5 font-mono font-bold text-gold-600">${maghrib}</td>
-          </tr>
-        `;
-      }
-      tbody.innerHTML = html;
-    }
-
-    // Zakat
     function calcZakat() {
-      const cash = parseFloat(document.getElementById('z-cash').value) || 0;
-      const gold = parseFloat(document.getElementById('z-gold').value) || 0;
-      const silver = parseFloat(document.getElementById('z-silver').value) || 0;
-      const debt = parseFloat(document.getElementById('z-debt').value) || 0;
+      const cash = parseFloat(document.getElementById('z-cash').value) || 0, gold = parseFloat(document.getElementById('z-gold').value) || 0, silver = parseFloat(document.getElementById('z-silver').value) || 0, debt = parseFloat(document.getElementById('z-debt').value) || 0;
       const net = Math.max(0, (cash + gold + silver) - debt);
       document.getElementById('z-net').innerText = '₹ ' + net.toLocaleString('en-IN');
       document.getElementById('z-due').innerText = '₹ ' + (net * 0.025).toLocaleString('en-IN', { maximumFractionDigits: 2 });
     }
 
-    // Start
     window.addEventListener('DOMContentLoaded', () => {
+      setTimeout(() => {
+        const splash = document.getElementById('royalSplashScreen');
+        if (splash) splash.classList.add('splash-hide');
+      }, 2900);
+
+      if ('serviceWorker' in navigator) navigator.serviceWorker.register('./sw.js').catch(() => {});
+
       setInterval(() => {
         document.getElementById('topClock').innerText = new Date().toLocaleTimeString();
         updateCountdown();
       }, 1000);
       loadPrayers();
       initParaList();
-      initSurahList();
+      initSurahDropdown();
+      renderBookmarks();
+      loadQuranPage(currentPage);
       renderSunnahs();
-      renderMasnoonDuas();
-      renderSahihHadiths();
-      renderRamadanSchedule();
-      updateBookmarkBadge();
-      checkResumeBanner();
-
-      setTasbeehTarget(tTarget);
-      document.getElementById('tasbeehVal').innerText = tCount;
-      document.getElementById('tasbeehLaps').innerText = tLaps;
-
-      // Open Page 1 (or last read page) in book format
-      loadQuranPage(currentPageNum);
     });
   </script>
 </body>
