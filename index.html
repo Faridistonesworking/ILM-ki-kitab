@@ -629,19 +629,31 @@
     // Indo-Pak Clean Script Normalizer (Removes Uthmani small 'o' / Alif Wasla ٱ & stray pause marks)
 function formatIndoPakArabic(text) {
   return text
+    // 1. Saare Alif Wasla (ٱ) ko clean Indo-Pak Alif (ا) me badlein (chota 'u/o' loop khatam)
+    .replace(/ٱ/g, 'ا')
+    // 2. Faltu Uthmani symbols aur chote gol sukoon/circles hatayein
     .replace(/[\u06D6-\u06DC\u06DF-\u06E8\u06EA-\u06ED]/g, '')
+    // 3. Muqatta'at (Alif Laam Meem) par proper Maddah lagayein
+    .replace(/^الم$/, 'الٓمٓ')
+    .replace(/^المص$/, 'الٓمٓصٓ')
+    .replace(/^الر$/, 'الٓر')
+    .replace(/^المر$/, 'الٓمٓر')
+    .replace(/^كهيعص$/, 'كٓهٰيٰعٓصٓ')
+    .replace(/^طسم$/, 'طٰسٓمٓ')
+    .replace(/^حم$/, 'حٰمٓ')
     .trim();
 }
 
-    function stripInlineBismillah(text, surahNum, ayahNum) {
-      if (ayahNum !== 1 || surahNum === 1 || surahNum === 9) return text;
-      return text
-        .replace(/^بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ\s*/, '')
-        .replace(/^بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ\s*/, '')
-        .replace(/^بِسْمِ اَللَّهِ اَلرَّحْمٰنِ اَلرَّحِيمِ\s*/, '')
-        .trim();
-    }
-
+function stripInlineBismillah(text, surahNum, ayahNum) {
+  if (ayahNum !== 1 || surahNum === 1 || surahNum === 9) return text;
+  // Pehle Alif Wasla (ٱ) ko normalize karein taaki Bismillah 100% match hokar hat jaye
+  let normalized = text.replace(/ٱ/g, 'ا');
+  return normalized
+    .replace(/^بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ\s*/u, '')
+    .replace(/^بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ\s*/u, '')
+    .replace(/^بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْمِ\s*/u, '')
+    .trim();
+}
     // Build Royal Ornamental Arch Surah & Bismillah Banner (Matches Printed Mushaf Header)
     function renderSurahOrnamentalBanner(surah) {
       const showBismillah = (surah.number !== 1 && surah.number !== 9);
