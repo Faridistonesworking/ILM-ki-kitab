@@ -627,20 +627,11 @@
     }
 
     // Indo-Pak Clean Script Normalizer (Removes Uthmani small 'o' / Alif Wasla ٱ & stray pause marks)
-    function formatIndoPakArabic(text) {
-      return text
-        // Replace Uthmani Alif Wasla (ٱ) at start of Al- (ٱل) with standard Indo-Pak Alif + Zabar (اَل)
-        .replace(/ٱل/g, 'اَل')
-        // Replace any remaining Alif Wasla (ٱ) with clean Alif (ا)
-        .replace(/ٱ/g, 'ا')
-        // Remove Uthmani small high rounded zero / empty center circles (U+06DF, U+06E0) that look like small 'o'
-        .replace(/[\u06DF\u06E0]/g, '')
-        // Normalize Uthmani dagger alif / small letters so they look crisp in Indo-Pak Naskh
-        .replace(/رَّحْمَٰنِ/g, 'رَّحْمٰنِ')
-        .replace(/عَٰلَمِينَ/g, 'عٰلَمِيْنَ')
-        .replace(/مَٰلِكِ/g, 'مٰلِكِ')
-        .trim();
-    }
+function formatIndoPakArabic(text) {
+  return text
+    .replace(/[\u06D6-\u06DC\u06DF-\u06E8\u06EA-\u06ED]/g, '')
+    .trim();
+}
 
     function stripInlineBismillah(text, surahNum, ayahNum) {
       if (ayahNum !== 1 || surahNum === 1 || surahNum === 9) return text;
@@ -816,7 +807,7 @@
 
       try {
         const [resAr, resUr, resRo] = await Promise.all([
-          fetch(`https://api.alquran.cloud/v1/page/${currentPage}/quran-uthmani`),
+          fetch(`https://api.alquran.cloud/v1/page/${currentPage}/quran-indopak`),
           fetch(`https://api.alquran.cloud/v1/page/${currentPage}/ur.jalandhry`),
           fetch(`https://api.alquran.cloud/v1/page/${currentPage}/en.sahih`)
         ]);
